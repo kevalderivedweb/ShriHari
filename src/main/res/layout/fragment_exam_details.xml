@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:orientation="vertical"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/backgraound_gray_round_2"
+    android:layout_marginTop="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:tint="@color/gray"
+            android:visibility="gone"
+            android:src="@drawable/ic_back_2"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="EXAMS - IELTS 16 September"
+            android:textSize="20dp"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <include layout="@layout/item_examdetails"
+        android:id="@+id/pd1"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    <include layout="@layout/item_examdetails"/>
+    </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

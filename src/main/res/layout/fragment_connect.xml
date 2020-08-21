@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_above="@+id/one"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/backgraound_gray_round_2">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary"
+            android:weightSum="3">
+
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/txt_color"
+                android:textStyle="normal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="0.6"
+                android:layout_gravity="center"
+                android:gravity="start"
+                android:layout_marginLeft="10dp"
+                android:text="Connect"
+                android:textSize="18dp"/>
+
+
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:background="@drawable/d_round_other_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="How are you brother ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:background="@drawable/d_round_my_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fine and you ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/d_round_other_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="In descriptive writing, the author does not just tell the reader what was seen, felt, tested, smelled, or heard. Rather, the author describes something
+
+"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+
+                    android:background="@drawable/d_round_my_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fine and you ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+
+                    android:background="@drawable/d_round_other_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="How are you brother ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/d_round_my_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="In descriptive writing, the author does not just tell the reader what was seen, felt, tested, smelled, or heard. Rather, the author describes something"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+
+                    android:background="@drawable/d_round_other_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="How are you brother ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+
+                    android:background="@drawable/d_round_my_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fine and you ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_margin="10dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:background="@drawable/d_round_other_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="How are you brother ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+
+                    android:background="@drawable/d_round_my_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fine and you ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+
+                    android:background="@drawable/d_round_other_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="How are you brother ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_margin="10dp"
+
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:background="@drawable/d_round_my_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fine and you ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_margin="10dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:background="@drawable/d_round_other_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="How are you brother ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_margin="10dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:background="@drawable/d_round_my_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fine and you ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:layout_margin="10dp"
+
+                    android:padding="5dp"
+                    android:background="@drawable/d_round_other_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="How are you brother ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_margin="10dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:background="@drawable/d_round_my_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fine and you ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_margin="10dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:background="@drawable/d_round_other_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="How are you brother ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_margin="10dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:background="@drawable/d_round_my_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fine and you ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_margin="10dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:background="@drawable/d_round_other_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="How are you brother ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_margin="10dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:background="@drawable/d_round_my_background"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fine and you ?"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="15dp"/>
+
+
+                </RelativeLayout>
+
+
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edttxt"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="   Type Smonthing..."
+            android:layout_alignParentBottom="true"
+            android:drawableTint="@color/black"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="0.2"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/shadow"
+            android:layout_marginTop="15dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/send"
+            android:layout_gravity="center"
+            android:layout_weight="1.8"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

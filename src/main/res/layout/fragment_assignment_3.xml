@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary"
+            android:weightSum="2"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/txt_color"
+                android:textStyle="normal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="0.2"
+                android:layout_marginLeft="10dp"
+                android:text="Assignment"
+                android:textSize="20dp"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.8"
+                android:src="@drawable/ic_filter"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/txt_color"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="10dp"
+                android:text="Speaking"
+                android:textSize="20dp"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.4"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/ic_watch"/>
+
+            <TextView
+                android:id="@+id/period"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1.1"
+                android:layout_gravity="center|start"
+                android:gravity="center|start"
+                android:layout_marginLeft="5dp"
+                android:text="13:14 - 13:14"
+                android:textColor="@color/black"
+                android:textSize="11dp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color"
+            android:textStyle="normal"
+
+            android:id="@+id/standard"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="[IELTS - NOT DECIDE BATCH]"
+            android:textSize="15dp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color"
+            android:textStyle="bold"
+
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="Classwork:"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:id="@+id/classwork"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color"
+            android:textStyle="normal"
+
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="Classwork:"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color"
+            android:textStyle="bold"
+
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="Homework:"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color"
+            android:textStyle="normal"
+
+            android:id="@+id/homework"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="Homework:"
+            android:textSize="18dp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color"
+            android:textStyle="bold"
+
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="Date :"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color"
+            android:textStyle="normal"
+
+            android:id="@+id/date"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="10 June, 2020"
+            android:textSize="18dp"/>   <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/txt_color"
+        android:textStyle="bold"
+
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="Due date :"
+        android:textSize="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color"
+            android:textStyle="normal"
+
+            android:id="@+id/date2"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="10 June, 2020"
+            android:textSize="18dp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-10dp"
+            android:layout_marginRight="-10dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:tint="@color/white"
+                    android:src="@drawable/ic_attech"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textStyle="normal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="View Attachments"
+                    android:textSize="14dp"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginTop="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/txt_color"
+                        android:textStyle="normal"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:drawableLeft="@drawable/perent"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="15dp"
+                        android:text="0/84"
+                        android:textSize="10dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/txt_color"
+                        android:textStyle="normal"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:drawableLeft="@drawable/student"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="15dp"
+                        android:text="0/84"
+                        android:textSize="10dp"/>
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:tint="@color/black"
+                    android:src="@drawable/ic_attech"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="normal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="View Attachments"
+                    android:textSize="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/colorPrimary">
+
+                    <TextView
+                        android:id="@+id/parent"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/txt_color"
+                        android:textStyle="normal"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:drawableLeft="@drawable/perent"
+                        android:layout_gravity="center"
+                        android:text="0/84"
+                        android:textSize="7dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/colorPrimary">
+
+                    <TextView
+                        android:id="@+id/student"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/txt_color"
+                        android:textStyle="normal"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:drawableLeft="@drawable/student"
+                        android:layout_gravity="center"
+                        android:text="0/84"
+                        android:textSize="7dp"/>
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/open_botton"/>
+
+</RelativeLayout>

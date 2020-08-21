@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color"
+            android:textStyle="normal"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="25dp"
+            android:text="Notification"
+            android:textSize="28dp"/>
+
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:background="@drawable/backgraound_gray_round"
+            android:weightSum="3"
+            android:layout_marginTop="15dp">
+
+
+            <include layout="@layout/item_notification"
+                android:id="@+id/details"/>
+            <include layout="@layout/item_notification"/>
+            <include layout="@layout/item_notification"/>
+            <include layout="@layout/item_notification"/>
+            <include layout="@layout/item_notification"/>
+            <include layout="@layout/item_notification"/>
+            <include layout="@layout/item_notification"/>
+            <include layout="@layout/item_notification"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

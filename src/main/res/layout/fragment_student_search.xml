@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/txt_color"
+        android:textStyle="normal"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        android:gravity="start"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:text="Student"
+        android:textSize="28dp"/>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom ="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginTop="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_marginRight="15dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_color"
+                    android:textStyle="normal"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginRight="5dp"
+                    android:drawableRight="@drawable/ic_down"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="IELTS"
+                    android:textSize="20dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_color"
+                    android:textStyle="normal"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginRight="5dp"
+                    android:drawableRight="@drawable/ic_down"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="Batch"
+                    android:textSize="20dp"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="  Studnet Search"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_search"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/item_student_search_red" />
+                <include layout="@layout/item_student_search"/>
+                <include layout="@layout/item_student_search"/>
+                <include layout="@layout/item_student_search"/>
+                <include layout="@layout/item_student_search"/>
+                <include layout="@layout/item_student_search"/>
+                <include layout="@layout/item_student_search"/>
+                <include layout="@layout/item_student_search"/>
+                <include layout="@layout/item_student_search"/>
+                <include layout="@layout/item_student_search"/>
+                <include layout="@layout/item_student_search"/>
+                <include layout="@layout/item_student_search"/>
+                <include layout="@layout/item_student_search"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+</LinearLayout>
