@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1007400086782",
+    "firebase_url": "https://shreehari-77230.firebaseio.com",
+    "project_id": "shreehari-77230",
+    "storage_bucket": "shreehari-77230.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007400086782:android:ead11498d83d4f601389af",
+        "android_client_info": {
+          "package_name": "com.example.shreehari"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1007400086782-rjt9no0m0bdp9hsbnj63vi239du27sj7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shreehari",
+            "certificate_hash": "bdbe2531d99769457071e36aef77f67d36f49812"
+          }
+        },
+        {
+          "client_id": "1007400086782-4s0o653ua522d04ndnte4h9lcn7oot24.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsMYiYIxCDmrIosprpacN1Lk_CGYfSWIk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007400086782-4s0o653ua522d04ndnte4h9lcn7oot24.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
