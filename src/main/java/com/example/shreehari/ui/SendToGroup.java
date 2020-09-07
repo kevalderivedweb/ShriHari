@@ -2,6 +2,8 @@ package com.example.shreehari.ui;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -14,15 +16,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.example.shreehari.API.AndroidMultiPartEntity;
@@ -48,7 +55,11 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class SendToGroup extends Fragment {
@@ -59,7 +70,15 @@ public class SendToGroup extends Fragment {
 	private EditText Title,Description;
 	private ImageView Done;
 	private TextView Attechment;
-	private String send_to_group = "student,parent";
+	private String send_to_group = "";
+	ArrayList<String>  strings = new ArrayList<>();
+	private TextView all,studnet,staff,parent;
+	private boolean isAllSelected = true;
+	private boolean isStudentSelected = false;
+	private boolean isStaffSelected = false;
+	private boolean isParentSelected = false;
+	private static String publish_date;
+	private static TextView date;
 
 
 	// Store instance variables based on arguments passed
@@ -74,13 +93,117 @@ public class SendToGroup extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_group, container, false);
+		getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
 		Title = view.findViewById(R.id.title);
 		Description = view.findViewById(R.id.description);
 		Done = view.findViewById(R.id.done);
 		Attechment = view.findViewById(R.id.attechment);
+		all = view.findViewById(R.id.all);
+		staff = view.findViewById(R.id.staff);
+		studnet = view.findViewById(R.id.studnet);
+		parent = view.findViewById(R.id.parent);
+		date = view.findViewById(R.id.date);
 
 
+		date.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				DialogFragment newFragment = new DatePickerFragment();
+				newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+
+			}
+		});
+
+		publish_date = getDateTime();
+		strings.add("All");
+		all.setOnClickListener(new View.OnClickListener() {
+			@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+			@Override
+			public void onClick(View view) {
+				if(isAllSelected){
+					isAllSelected = false;
+					strings.remove("All");
+					all.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg));
+				}else {
+					strings.add("All");
+					isAllSelected = true;
+					all.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg_yellow));
+				}
+			}
+		});
+
+		staff.setOnClickListener(new View.OnClickListener() {
+			@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+			@Override
+			public void onClick(View view) {
+				if(isStaffSelected){
+					strings.remove("Staff");
+					isStaffSelected = false;
+					staff.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg));
+				}else {
+					strings.add("Staff");
+					isStaffSelected = true;
+					staff.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg_yellow));
+				}
+
+				if(isParentSelected&&isStaffSelected&&isParentSelected){
+					all.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg_yellow));
+					strings.add("All");
+				}else {
+					all.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg));
+					strings.remove("All");
+				}
+
+			}
+		});
+
+		studnet.setOnClickListener(new View.OnClickListener() {
+			@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+			@Override
+			public void onClick(View view) {
+				if(isStudentSelected){
+					strings.remove("Student");
+					isStudentSelected = false;
+					studnet.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg));
+				}else {
+					strings.add("Student");
+					isStudentSelected = true;
+					studnet.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg_yellow));
+				}
+				if(isParentSelected&&isStaffSelected&&isParentSelected){
+					all.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg_yellow));
+					strings.add("All");
+				}else {
+					all.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg));
+					strings.remove("All");
+				}
+			}
+		});
+
+		parent.setOnClickListener(new View.OnClickListener() {
+			@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+			@Override
+			public void onClick(View view) {
+				if(isParentSelected){
+					strings.remove("Parent");
+					isParentSelected = false;
+					parent.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg));
+				}else {
+					strings.add("Parent");
+					isParentSelected = true;
+					parent.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg_yellow));
+				}
+				if(isParentSelected&&isStaffSelected&&isParentSelected){
+					all.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg_yellow));
+					strings.add("All");
+				}else {
+					all.setBackground(getActivity().getDrawable(R.drawable.bg_round_bg));
+					strings.remove("All");
+				}
+			}
+		});
 
 		Attechment.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -92,6 +215,14 @@ public class SendToGroup extends Fragment {
 		Done.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				for(int i = 0 ; i < strings.size() ; i ++){
+					if(send_to_group.isEmpty()){
+						send_to_group =  strings.get(i);
+					}else {
+						send_to_group = send_to_group +  ","+ strings.get(i);
+					}
+
+				}
 				if(Title.getText().toString().isEmpty()){
 					Toast.makeText(getActivity(), "Please Enter Title", Toast.LENGTH_SHORT).show();
 				}else if(Description.getText().toString().isEmpty()){
@@ -150,17 +281,20 @@ public class SendToGroup extends Fragment {
 					entity.addPart("attachments[]", new FileBody(new File(FileUtils.getPath(getActivity(), mSelected.get(i)))));
 
 				}
-				entity.addPart("batch_ids[]", new StringBody("0"));
+				entity.addPart("batch_ids[]", new StringBody("1"));
+				entity.addPart("batch_ids[]", new StringBody("2"));
 
 				UserSession userSession = new UserSession(getActivity());
 				// Extra parameters if you want to pass to server
 				entity.addPart("title", new StringBody(Title.getText().toString()));
 				entity.addPart("description", new StringBody(Description.getText().toString()));
-				entity.addPart("branch_id", new StringBody(userSession.getBranchId()));
+				entity.addPart("branch_id", new StringBody("1"));
+				entity.addPart("publish_datetime ", new StringBody(publish_date));
 				entity.addPart("send_to_group", new StringBody(send_to_group));
 				httppost.setEntity(entity);
 				httppost.addHeader("Authorization","Bearer "+userSession.getAPIToken());
 				// Making server call
+				Log.e("sendto",send_to_group);
 				HttpResponse response = httpclient.execute(httppost);
 				HttpEntity r_entity = response.getEntity();
 
@@ -178,7 +312,6 @@ public class SendToGroup extends Fragment {
 			} catch (IOException e) {
 				responseString = e.toString();
 			}
-
 			return responseString;
 
 		}
@@ -298,5 +431,42 @@ public class SendToGroup extends Fragment {
 	}
 
 
+	private String getDateTime() {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
 
+
+	public static class DatePickerFragment extends DialogFragment
+			implements DatePickerDialog.OnDateSetListener {
+
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			final Calendar c = Calendar.getInstance();
+			int year = c.get(Calendar.YEAR);
+			int month = c.get(Calendar.MONTH);
+			int day = c.get(Calendar.DAY_OF_MONTH);
+			DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
+			dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+			return  dialog;
+		}
+
+		public void onDateSet(DatePicker view, int year, int month, int day) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(year, month, day);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			String dateString = dateFormat.format(calendar.getTime());
+			date.setText(dateString);
+			publish_date = dateString;
+
+		}
+	}
+
+	@Override
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+	}
 }

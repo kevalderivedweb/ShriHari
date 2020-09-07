@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:windowSoftInputMode="adjustPan|adjustResize"
+        android:fitsSystemWindows="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
+        android:windowSoftInputMode="adjustPan|adjustResize"
         android:layout_marginRight="15dp"
         android:background="@drawable/backgraound_gray_round_2">
         <LinearLayout
@@ -88,6 +94,7 @@
 
 
             <TextView
+                android:id="@+id/date"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="0.3"
                 android:layout_width="match_parent"
@@ -124,6 +131,7 @@
                 android:textSize="14dp"/>
 
             <TextView
+                android:id="@+id/all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -138,6 +146,7 @@
 
 
             <TextView
+                android:id="@+id/staff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -151,6 +160,7 @@
                 android:textSize="5dp"/>
 
             <TextView
+                android:id="@+id/studnet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -164,6 +174,7 @@
                 android:textSize="5dp"/>
 
             <TextView
+                android:id="@+id/parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -345,5 +356,5 @@
 
 
     </LinearLayout>
-
-</LinearLayout>
+    </ScrollView>
+</RelativeLayout>

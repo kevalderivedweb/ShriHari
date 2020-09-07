@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="10dp"
@@ -36,64 +36,37 @@
 
 
         </LinearLayout>
-        <LinearLayout
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"/>
+        <!-- our tablayout to display tabs  -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginTop="10dp">
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:background="@color/txt_color"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="normal"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp"
-                    android:text="PENDING"
-                    android:textSize="12dp"/>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <ScrollView
+        <!-- View pager to swipe views -->
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <include layout="@layout/item_leave"/>
-                <include layout="@layout/item_leave"/>
-                <include layout="@layout/item_leave"/>
-                <include layout="@layout/item_leave"/>
-                <include layout="@layout/item_leave"/>
-                <include layout="@layout/item_leave"/>
-                <include layout="@layout/item_leave"/>
-                <include layout="@layout/item_leave"/>
-                <include layout="@layout/item_leave"/>
-                <include layout="@layout/item_leave"/>
-                <include layout="@layout/item_leave"/>
-                <include layout="@layout/item_leave"/>
-
-            </LinearLayout>
-        </ScrollView>
-
+            android:layout_height="fill_parent"/>
 
     </LinearLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/add_btn"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/open_botton"/>
+
+</RelativeLayout>

@@ -27,7 +27,9 @@ public class SpinAdapter4 extends ArrayAdapter<PeriodModel> {
 
     @Override
     public int getCount(){
-       return values.size();
+        int count = super.getCount();
+        return count > 0 ? count - 1 : count;
+
     }
 
     @Override

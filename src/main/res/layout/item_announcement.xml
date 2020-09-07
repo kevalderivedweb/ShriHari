@@ -69,7 +69,7 @@
 
                     <TextView
                         android:id="@+id/send_by"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/txt_color"
                         android:textStyle="normal"
@@ -77,15 +77,6 @@
                         android:layout_weight="0"
                         android:text=" ASHOK PATEL"
                         android:textSize="12dp"/>
-
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
 
 
                     <TextView
@@ -100,6 +91,19 @@
                         android:layout_weight="0"
                         android:text="15 July 2020"
                         android:textSize="12dp"/>
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+
 
 
 

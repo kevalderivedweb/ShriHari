@@ -27,7 +27,9 @@ public class SpinAdapter2 extends ArrayAdapter<StandardModel> {
 
     @Override
     public int getCount(){
-       return values.size();
+        int count = super.getCount();
+        return count > 0 ? count - 1 : count;
+
     }
 
     @Override

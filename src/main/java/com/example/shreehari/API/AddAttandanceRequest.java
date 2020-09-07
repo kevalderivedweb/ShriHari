@@ -22,6 +22,7 @@ public class AddAttandanceRequest extends StringRequest {
         super(Method.GET, ServerUtils.BASE_URL+"add-attendance", listener, null);
         parameters = new HashMap<>();
         parameters.put("date", date);
+
         for (int i = 0 ; i < stringArrayList.size() ; i++) {
             parameters.put("students[]", stringArrayList.get(i));
         }

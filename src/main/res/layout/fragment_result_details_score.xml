@@ -23,6 +23,7 @@
             android:src="@drawable/ic_back_2"/>
 
         <TextView
+            android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/txt_color"
@@ -35,6 +36,31 @@
             android:textSize="18dp"/>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/txt_color"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mock_test_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            android:text="Subject"
+            android:textSize="18dp"/>
+
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -97,11 +123,13 @@
             android:textSize="12dp"/>
 
         <TextView
+            android:id="@+id/listening"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/txt_color"
             android:textStyle="normal"
             android:gravity="end"
+            android:maxLength="5"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
@@ -135,12 +163,14 @@
             android:textSize="12dp"/>
 
         <TextView
+            android:id="@+id/reading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/txt_color"
             android:textStyle="normal"
             android:gravity="end"
             android:layout_weight="1"
+            android:maxLength="5"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
@@ -173,11 +203,13 @@
             android:textSize="12dp"/>
 
         <TextView
+            android:id="@+id/writing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/txt_color"
             android:textStyle="normal"
             android:gravity="end"
+            android:maxLength="5"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
@@ -211,11 +243,13 @@
             android:textSize="12dp"/>
 
         <TextView
+            android:id="@+id/speaking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/txt_color"
             android:textStyle="normal"
             android:gravity="end"
+            android:maxLength="5"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
@@ -249,11 +283,13 @@
             android:textSize="12dp"/>
 
         <TextView
+            android:id="@+id/total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/txt_color"
             android:textStyle="normal"
             android:gravity="end"
+            android:maxLength="5"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"

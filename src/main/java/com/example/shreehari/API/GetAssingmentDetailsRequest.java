@@ -16,7 +16,7 @@ public class GetAssingmentDetailsRequest extends StringRequest {
     private Map<String, String> parameters;
 
     public GetAssingmentDetailsRequest(String id, Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, ServerUtils.BASE_URL+"get-announcement-by-id?get-assignment?mobile_assignment_id="+id, listener, null);
+        super(Method.GET, ServerUtils.BASE_URL+"get-assignment?mobile_assignment_id="+id, listener, null);
         parameters = new HashMap<>();
 
     }

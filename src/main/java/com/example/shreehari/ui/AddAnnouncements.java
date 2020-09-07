@@ -292,6 +292,7 @@ public class AddAnnouncements extends Fragment {
 				UserSession userSession = new UserSession(getActivity());
 				// Extra parameters if you want to pass to server
 				entity.addPart("title", new StringBody(Title.getText().toString()));
+
 				entity.addPart("description", new StringBody(Description.getText().toString()));
 				entity.addPart("branch_id", new StringBody(userSession.getBranchId()));
 				httppost.setEntity(entity);
@@ -330,7 +331,7 @@ public class AddAnnouncements extends Fragment {
 
 				if (jsonObject.getInt("ResponseCode")==200) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-					builder.setMessage("Updated Successfully!")
+					builder.setMessage("Announcement add Successfully!")
 							.setCancelable(false)
 							.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int id) {

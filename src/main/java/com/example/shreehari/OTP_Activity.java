@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,12 +21,15 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.shreehari.API.CheckOTPRequest;
 import com.example.shreehari.UserSession.UserSession;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OTP_Activity extends AppCompatActivity {
 
@@ -34,6 +38,10 @@ public class OTP_Activity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String OTP ="";
     private UserSession session;
+    private TextView name;
+    private String Name,LastName;
+    private String profile_pic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +59,19 @@ public class OTP_Activity extends AppCompatActivity {
         et2 = findViewById(R.id.editText2);
         et3 = findViewById(R.id.editText3);
         et4 = findViewById(R.id.editText4);
+        name = findViewById(R.id.name);
 
+        Bundle extras = getIntent().getExtras();
+        if(extras == null) {
+            Name= null;
+            LastName= null;
+        } else {
+            Name= extras.getString("Name");
+            LastName= extras.getString("LastName");
+            profile_pic= extras.getString("profile_pic");
+        }
 
-
+        name.setText(Name + " " + LastName);
         et1.addTextChangedListener(new GenericTextWatcher(et1));
         et2.addTextChangedListener(new GenericTextWatcher(et2));
         et3.addTextChangedListener(new GenericTextWatcher(et3));
@@ -64,15 +82,35 @@ public class OTP_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                OTP = et1.getText().toString()+
-                        et2.getText().toString()+
-                        et3.getText().toString()+
-                        et4.getText().toString();
+                if(et1.getText().toString().isEmpty()){
+                    Toast.makeText(OTP_Activity.this,"Please enter OTP",Toast.LENGTH_SHORT).show();
 
-                Check_Email(OTP,userSession.getFirebaseToken());
+                }else if(et2.getText().toString().isEmpty()){
+                    Toast.makeText(OTP_Activity.this,"Please enter OTP",Toast.LENGTH_SHORT).show();
+
+                }else if(et3.getText().toString().isEmpty()){
+                    Toast.makeText(OTP_Activity.this,"Please enter OTP",Toast.LENGTH_SHORT).show();
+
+                }else if(et4.getText().toString().isEmpty()){
+                    Toast.makeText(OTP_Activity.this,"Please enter OTP",Toast.LENGTH_SHORT).show();
+
+                }else {
+                    OTP = et1.getText().toString()+
+                            et2.getText().toString()+
+                            et3.getText().toString()+
+                            et4.getText().toString();
+
+                    Check_Email(OTP,userSession.getFirebaseToken());
+                }
+
 
             }
         });
+
+
+        CircleImageView imageView1 = (CircleImageView) findViewById(R.id.profile_image2);
+        Glide.with(this).load(profile_pic).into(imageView1);
+
     }
 
     public class GenericTextWatcher implements TextWatcher
@@ -143,10 +181,14 @@ public class OTP_Activity extends AppCompatActivity {
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response);
-                    Toast.makeText(OTP_Activity.this,jsonObject.getString("ResponseMsg"),Toast.LENGTH_SHORT).show();
+               //     Toast.makeText(OTP_Activity.this,jsonObject.getString("ResponseMsg"),Toast.LENGTH_SHORT).show();
+
 
                     Intent intent=new Intent(OTP_Activity.this, SetMPin_Activity.class);
+                    intent.putExtra("Name",jsonObject.getJSONObject("data").getString("first_name"));
+                    intent.putExtra("LastName",jsonObject.getJSONObject("data").getString("last_name"));
                     startActivity(intent);
+                    finish();
                     overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 
                 } catch (JSONException e) {

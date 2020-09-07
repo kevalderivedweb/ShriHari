@@ -39,6 +39,7 @@ import com.example.shreehari.API.GetAnnouncementRequest;
 import com.example.shreehari.API.GetAnnouncementRequestFilter;
 import com.example.shreehari.Adapter.AnnouncementAdapter;
 import com.example.shreehari.Adapter.SpinAdapter5;
+import com.example.shreehari.EndlessRecyclerViewScrollListener;
 import com.example.shreehari.Model.AnnouncementModel;
 import com.example.shreehari.Model.TypeModel;
 import com.example.shreehari.R;
@@ -49,16 +50,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Announcements extends Fragment {
-	// Store instance variables
-	private String title;
-	private int page;
-	private View details;
+
 	private LinearLayout mview;
 	private ImageView madd;
 	private UserSession session;
@@ -68,10 +70,14 @@ public class Announcements extends Fragment {
 	private ArrayList<AnnouncementModel> mDataset = new ArrayList<>();
 	private ArrayList<TypeModel> mDataset2 = new ArrayList<>();
 	private int type_pos = 0;
-	private TextView start_date,due_date;
+	private static TextView start_date;
+	private static TextView due_date;
+	private int last_size;
+	private LinearLayoutManager linearlayout;
+    private String Mpage = "1";
 
 
-	// Store instance variables based on arguments passed
+    // Store instance variables based on arguments passed
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -96,7 +102,8 @@ public class Announcements extends Fragment {
 		});
 		recyleview = view.findViewById(R.id.recyleview);
 		recyleview.setHasFixedSize(true);
-		recyleview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+		linearlayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+		recyleview.setLayoutManager(linearlayout);
 		mAdapter = new AnnouncementAdapter(mDataset, new AnnouncementAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(int item) {
@@ -113,14 +120,31 @@ public class Announcements extends Fragment {
 
 		mview = view.findViewById(R.id.view);
 		madd = view.findViewById(R.id.add);
+		mDataset.clear();
+		recyleview.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayout) {
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				Log.e("PageStatus",page + "  " + last_size);
+				if (page!=last_size){
+					Mpage = String.valueOf(page+1);
+					GetAnnouncement(Mpage);
+				}
+			}
+		});
+
+		if(session.getUserType().equals("admin")){
+			view.findViewById(R.id.add).setVisibility(View.VISIBLE);
+		}else {
+			view.findViewById(R.id.add).setVisibility(View.GONE);
+		}
 		madd.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				if(mview.getVisibility()==View.VISIBLE){
-					madd.setImageDrawable(getResources().getDrawable(R.drawable.add2));
+					madd.setImageDrawable(getResources().getDrawable(R.drawable.add_ano));
 					mview.setVisibility(View.GONE);
 				}else {
-					madd.setImageDrawable(getResources().getDrawable(R.drawable.add_ano));
+					madd.setImageDrawable(getResources().getDrawable(R.drawable.add2));
 					mview.setVisibility(View.VISIBLE);
 				}
 
@@ -149,7 +173,7 @@ public class Announcements extends Fragment {
 
 
 
-		GetAnnouncement();
+		GetAnnouncement(Mpage);
 		return view;
 	}
 
@@ -164,7 +188,7 @@ public class Announcements extends Fragment {
 				.commit();
 	}
 
-	private void GetAnnouncement() {
+	private void GetAnnouncement(String Page) {
 
 
 		final KProgressHUD progressDialog = KProgressHUD.create(getActivity())
@@ -175,10 +199,11 @@ public class Announcements extends Fragment {
 				.setDimAmount(0.5f)
 				.show();
 
-		GetAnnouncementRequest loginRequest = new GetAnnouncementRequest(new Response.Listener<String>() {
+		Log.e("PageStatusInAPI",Page );
+		GetAnnouncementRequest loginRequest = new GetAnnouncementRequest(Page,new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				Log.e("Response", response + " null");
+				Log.e("Response1", response + " null");
 				progressDialog.dismiss();
 
 				JSONObject jsonObject = null;
@@ -186,6 +211,7 @@ public class Announcements extends Fragment {
 					jsonObject = new JSONObject(response);
 
 					JSONObject jsonObject1 = jsonObject.getJSONObject("data");
+					 last_size = jsonObject1.getInt("last_page");
 
 					JSONArray jsonArray = jsonObject1.getJSONArray("data");
 
@@ -246,11 +272,36 @@ public class Announcements extends Fragment {
 		start_date = dialog.findViewById(R.id.start_date);
 		due_date = dialog.findViewById(R.id.due_date);
 		TextView done = dialog.findViewById(R.id.done);
+		ImageView clear_end = dialog.findViewById(R.id.clear_end);
+		ImageView clear_start = dialog.findViewById(R.id.clear_start);
+
+		clear_end.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				due_date.setText("   Select End Date:");
+			}
+		});
+clear_start.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				start_date.setText("   Select Start Date:");
+			}
+		});
 
 		done.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				GetAnnouncement2(mDataset2.get(type_pos).getTitle(),start_date.getText().toString(),due_date.getText().toString());
+				dialog.dismiss();
+				if(type_pos==0) {
+					Toast.makeText(getActivity(),"Please select user",Toast.LENGTH_SHORT).show();
+				}else if(start_date.getText().toString().equals("   Select Start Date:")){
+					Toast.makeText(getActivity(),"Please select start date",Toast.LENGTH_SHORT).show();
+				}else if(due_date.getText().toString().equals("   Select End Date:")){
+					Toast.makeText(getActivity(),"Please select End  Date",Toast.LENGTH_SHORT).show();
+				}else {
+					GetAnnouncement2(mDataset2.get(type_pos).getTitle(),start_date.getText().toString(),due_date.getText().toString());
+
+				}
 			}
 		});
 
@@ -284,26 +335,35 @@ public class Announcements extends Fragment {
 			}
 		});
 
+		mDataset2.clear();
+
 
 		TypeModel typeModel1 = new TypeModel();
-		typeModel1.setTitle("parent");
+		typeModel1.setTitle("Parent");
 		mDataset2.add(typeModel1);
 
 		TypeModel typeModel2 = new TypeModel();
-		typeModel2.setTitle("student");
+		typeModel2.setTitle("Student");
 		mDataset2.add(typeModel2);
+
+		TypeModel typeModel = new TypeModel();
+		typeModel.setTitle("Please select user");
+		mDataset2.add(typeModel);
 
 		SpinAdapter5 adapter = new SpinAdapter5(getActivity(),
 				android.R.layout.simple_spinner_item,
 				mDataset2);
 		type.setAdapter(adapter);
+		type.setSelection(adapter.getCount());
 		dialog.show();
 
 	}
 
 
-	public class DatePickerFragment extends DialogFragment
+	public static class DatePickerFragment extends DialogFragment
 			implements DatePickerDialog.OnDateSetListener {
+
+		private String formattedDate;
 
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -317,12 +377,30 @@ public class Announcements extends Fragment {
 		}
 
 		public void onDateSet(DatePicker view, int year, int month, int day) {
-			start_date.setText(day+"-"+month+1+"-"+year);
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(year, month, day);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			String dateString = dateFormat.format(calendar.getTime());
+			try {
+
+				if(!due_date.getText().toString().equals("   Select End Date:")){
+				if(dateFormat.parse(due_date.getText().toString()).before(dateFormat.parse(dateString))) {
+					Toast.makeText(getActivity(),"Please select correct date",Toast.LENGTH_SHORT).show();
+					return;
+				}
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			start_date.setText("  "+dateString);
 		}
 	}
 
-	public class DatePickerFragment1 extends DialogFragment
+
+	public static class DatePickerFragment1 extends DialogFragment
 			implements DatePickerDialog.OnDateSetListener {
+
+		private String formattedDate;
 
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -336,7 +414,21 @@ public class Announcements extends Fragment {
 		}
 
 		public void onDateSet(DatePicker view, int year, int month, int day) {
-			due_date.setText(day+"-"+month+1+"-"+year);
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(year, month, day);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			String dateString = dateFormat.format(calendar.getTime());
+			try {
+				if(!start_date.getText().toString().equals("   Select Start Date:")) {
+					if (dateFormat.parse(start_date.getText().toString()).after(dateFormat.parse(dateString))) {
+						Toast.makeText(getActivity(), "Please select correct date", Toast.LENGTH_SHORT).show();
+						return;
+					}
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			due_date.setText("  "+dateString);
 		}
 	}
 

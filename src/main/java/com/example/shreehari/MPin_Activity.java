@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.shreehari.API.CheckMPINlRequest;
 import com.example.shreehari.UserSession.UserSession;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -31,11 +33,14 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MPin_Activity extends AppCompatActivity {
 
     private EditText et1,et2,et3,et4;
     private RequestQueue requestQueue;
     private UserSession session;
+    private TextView name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +56,49 @@ public class MPin_Activity extends AppCompatActivity {
         et2 = findViewById(R.id.editText2);
         et3 = findViewById(R.id.editText3);
         et4 = findViewById(R.id.editText4);
+        TextView textView = findViewById(R.id.forgot);
+
 
 
         UserSession userSession = new UserSession(getApplicationContext());
 
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MPin_Activity.this, SetMPin_Activity.class);
+                intent.putExtra("profile_pic",userSession.getProfile());
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        name = findViewById(R.id.name);
+
+        name.setText(userSession.getName()+" "+userSession.getLastName() );
+
         findViewById(R.id.done).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(et1.getText().toString().isEmpty()){
+                    Toast.makeText(MPin_Activity.this,"Please enter mPin",Toast.LENGTH_SHORT).show();
 
-                String Password  = et1.getText().toString()
-                        +et2.getText().toString()
-                        +et3.getText().toString()
-                        +et4.getText().toString();
-                Check_MPIN(userSession.getFirebaseToken(),Password);
+                }else if(et2.getText().toString().isEmpty()){
+                    Toast.makeText(MPin_Activity.this,"Please enter mPin",Toast.LENGTH_SHORT).show();
+
+                }else if(et3.getText().toString().isEmpty()){
+                    Toast.makeText(MPin_Activity.this,"Please enter mPin",Toast.LENGTH_SHORT).show();
+
+                }else if(et4.getText().toString().isEmpty()){
+                    Toast.makeText(MPin_Activity.this,"Please enter mPin",Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    String Password = et1.getText().toString()
+                            + et2.getText().toString()
+                            + et3.getText().toString()
+                            + et4.getText().toString();
+                    Check_MPIN(userSession.getFirebaseToken(), Password);
+                }
             }
         });
 
@@ -71,7 +106,8 @@ public class MPin_Activity extends AppCompatActivity {
         et2.addTextChangedListener(new GenericTextWatcher(et2));
         et3.addTextChangedListener(new GenericTextWatcher(et3));
         et4.addTextChangedListener(new GenericTextWatcher(et4));
-
+        CircleImageView imageView1 = (CircleImageView) findViewById(R.id.profile_image2);
+        Glide.with(this).load(userSession.getProfile()).into(imageView1);
 
 
     }
@@ -142,7 +178,7 @@ public class MPin_Activity extends AppCompatActivity {
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response);
-                    Toast.makeText(MPin_Activity.this,jsonObject.getString("ResponseMsg"),Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(MPin_Activity.this,jsonObject.getString("ResponseMsg"),Toast.LENGTH_SHORT).show();
                     if (jsonObject.getInt("ResponseCode")==200) {
 
                         JSONObject object = jsonObject.getJSONObject("data");
@@ -157,6 +193,10 @@ public class MPin_Activity extends AppCompatActivity {
                         String branch_id = String.valueOf(object.getInt("branch_id"));
                         String parent_id = String.valueOf(object.getInt("parent_id"));
                         String api_token = object.getString("api_token");
+                        String coaching_reg_no = "4/20";
+                       // String coaching_reg_no = object.getString("coaching_reg_no");
+                      //  String registered_date = object.getString("registered_date");
+                        String registered_date = "24 August,2020";
 
                         session.createLoginSession(mobile_user_master_id,
                                 first_name
@@ -168,11 +208,15 @@ public class MPin_Activity extends AppCompatActivity {
                                 ,coaching_student_id
                                 ,branch_id
                                 ,parent_id
-                                ,api_token);
+                                ,api_token,coaching_reg_no,registered_date);
 
                         Intent intent=new Intent(MPin_Activity.this, HomeActivity.class);
                         startActivity(intent);
+                        finish();
                         overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+
+                    }else {
+                        Toast.makeText(MPin_Activity.this,"Please enter valid mPin",Toast.LENGTH_SHORT).show();
 
                     }
                 } catch (JSONException e) {

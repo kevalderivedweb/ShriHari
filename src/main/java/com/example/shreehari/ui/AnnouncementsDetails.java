@@ -1,5 +1,6 @@
 package com.example.shreehari.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -78,6 +79,7 @@ public class AnnouncementsDetails extends Fragment {
 				.show();
 
 		GetAnnouncementDetailsRequest loginRequest = new GetAnnouncementDetailsRequest(id,new Response.Listener<String>() {
+			@SuppressLint("SetTextI18n")
 			@Override
 			public void onResponse(String response) {
 				Log.e("Response", response + " null");
@@ -96,8 +98,11 @@ public class AnnouncementsDetails extends Fragment {
 					TextView admin = view.findViewById(R.id.admin);
 					TextView student = view.findViewById(R.id.student);
 					TextView parent = view.findViewById(R.id.parent);
+					TextView letter = view.findViewById(R.id.letter);
 
+					Character character = jsonObject1.getString("title").charAt(0);
 					title.setText(jsonObject1.getString("title"));
+					letter.setText(""+character.toString().toUpperCase());
 					description.setText(jsonObject1.getString("description"));
 					send_by.setText("Send By : "+jsonObject1.getString("send_by"));
 					date.setText(jsonObject1.getString("date"));

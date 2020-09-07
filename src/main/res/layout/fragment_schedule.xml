@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:windowSoftInputMode="adjustPan|adjustResize"
+        android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -315,7 +318,7 @@
                         android:layout_gravity="center"
                         android:src="@drawable/ic_date"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -373,7 +376,7 @@
                         android:layout_gravity="center"
                         android:src="@drawable/ic_watch"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/start_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -423,7 +426,7 @@
                         android:layout_gravity="center"
                         android:src="@drawable/ic_watch"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/end_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -451,6 +454,7 @@
             android:textStyle="normal"
             android:layout_weight="0.5"
             android:visibility="visible"
+            android:layout_marginBottom="15dp"
             android:layout_gravity="center"
             android:hint="Class Room:"
             android:textSize="14dp"/>
@@ -464,5 +468,6 @@
 
 </LinearLayout>
 
+    </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>

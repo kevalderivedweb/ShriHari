@@ -2,6 +2,8 @@ package com.example.shreehari.ui;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -14,16 +16,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -66,7 +73,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,7 +88,10 @@ public class AddAssignment extends Fragment {
 	private KProgressHUD progressDialog;
 	private ImageView Attechment;
 	private List<Uri> mSelected = new ArrayList<>();
-	private EditText date,date2,homework,classwork;
+	private static TextView date;
+	private static TextView date2;
+	private EditText homework;
+	private EditText classwork;
 	private ArrayList<BatchModel> mDataset = new ArrayList<>();
 	private UserSession session;
 	private RequestQueue requestQueue;
@@ -88,6 +101,7 @@ public class AddAssignment extends Fragment {
 	private Spinner standard,batch,period;
 	private int standard_pos = 0,batch_pos = 0,period_pos=0;
 	private ImageView done;
+	private ArrayList<String> wareHouseList = new ArrayList<>();
 
 
 	// Store instance variables based on arguments passed
@@ -103,6 +117,7 @@ public class AddAssignment extends Fragment {
 							 Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_assignment, container, false);
 		requestQueue = Volley.newRequestQueue(getActivity());//Creating the RequestQueue
+		getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
 		Attechment = view.findViewById(R.id.attechment);
 		standard = view.findViewById(R.id.standard);
@@ -120,7 +135,21 @@ public class AddAssignment extends Fragment {
 		done.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				new UploadFileToServer().execute();
+				if(batch_pos==0||period_pos==0||standard_pos==0){
+					Toast.makeText(getActivity(),"" +
+							"Please select Batch, Period and standard",Toast.LENGTH_SHORT).show();
+				}else if(date.getText().toString().equals("   Select Start Date:")){
+					Toast.makeText(getActivity(),"Please select Start date",Toast.LENGTH_SHORT).show();
+
+				}else if(date2.getText().toString().equals("   Select End Date:")){
+					Toast.makeText(getActivity(),"Please select End date",Toast.LENGTH_SHORT).show();
+
+				}else if(homework.getText().toString().isEmpty()||classwork.getText().toString().isEmpty()){
+					Toast.makeText(getActivity(),"Please enter homework and classwork",Toast.LENGTH_SHORT).show();
+				}else {
+					new UploadFileToServer().execute();
+				}
+
 			}
 		});
 
@@ -128,6 +157,25 @@ public class AddAssignment extends Fragment {
 			@Override
 			public void onClick(View view) {
 				requestPermission();
+			}
+		});
+
+		date.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				DialogFragment newFragment = new DatePickerFragment1();
+				newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+
+			}
+		});
+
+
+		date2.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				DialogFragment newFragment = new DatePickerFragment2();
+				newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+
 			}
 		});
 
@@ -392,7 +440,7 @@ public class AddAssignment extends Fragment {
 			public void onResponse(String response) {
 				Log.e("Response", response + " null");
 				progressDialog.dismiss();
-
+				mDataset.clear();
 				JSONObject jsonObject = null;
 				try {
 					jsonObject = new JSONObject(response);
@@ -400,6 +448,8 @@ public class AddAssignment extends Fragment {
 					JSONArray jsonArray = jsonObject.getJSONArray("data");
 
 					for (int i = 0 ; i<jsonArray.length() ; i++){
+
+
 						JSONObject object = jsonArray.getJSONObject(i);
 						BatchModel BatchModel = new BatchModel();
 						BatchModel.setBatch_id(object.getString("batch_id"));
@@ -408,12 +458,26 @@ public class AddAssignment extends Fragment {
 						BatchModel.setStatus(object.getString("status"));
 						BatchModel.setBranch_id(object.getString("branch_id"));
 						mDataset.add(BatchModel);
+
+
+
 					}
 
+						BatchModel BatchModel = new BatchModel();
+						BatchModel.setBatch_id("");
+						BatchModel.setBatch_name("Please Select Batch");
+						BatchModel.setBatch_time("Please Select Batch");
+						BatchModel.setStatus("");
+						BatchModel.setBranch_id("");
+						mDataset.add(BatchModel);
 					SpinAdapter adapter = new SpinAdapter(getActivity(),
 							android.R.layout.simple_spinner_item,
 							mDataset);
+
+
+					adapter.setDropDownViewResource(R.layout.spinner_item);
 					batch.setAdapter(adapter);
+					batch.setSelection(adapter.getCount());
 
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -448,6 +512,7 @@ public class AddAssignment extends Fragment {
 			public void onResponse(String response) {
 				Log.e("Response", response + " null");
 
+				mDataset2.clear();
 				JSONObject jsonObject = null;
 				try {
 					jsonObject = new JSONObject(response);
@@ -455,6 +520,7 @@ public class AddAssignment extends Fragment {
 					JSONArray jsonArray = jsonObject.getJSONArray("data");
 
 					for (int i = 0 ; i<jsonArray.length() ; i++){
+
 						JSONObject object = jsonArray.getJSONObject(i);
 						StandardModel BatchModel = new StandardModel();
 						BatchModel.setCoaching_id(object.getString("coaching_id"));
@@ -463,10 +529,17 @@ public class AddAssignment extends Fragment {
 						mDataset2.add(BatchModel);
 					}
 
+					StandardModel BatchModel = new StandardModel();
+					BatchModel.setCoaching_id("");
+					BatchModel.setCoaching("Please select standard");
+					BatchModel.setStatus("");
+					mDataset2.add(BatchModel);
 					SpinAdapter2 adapter = new SpinAdapter2(getActivity(),
 							android.R.layout.simple_spinner_item,
 							mDataset2);
+					adapter.setDropDownViewResource(R.layout.spinner_item);
 					standard.setAdapter(adapter);
+					standard.setSelection(adapter.getCount());
 
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -495,7 +568,7 @@ public class AddAssignment extends Fragment {
 		loginRequest1.setTag("TAG");
 		requestQueue.add(loginRequest1);
 
-
+		mDataset3.clear();
 		GetPeriodRequest loginRequest2 = new GetPeriodRequest(new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
@@ -508,6 +581,8 @@ public class AddAssignment extends Fragment {
 					JSONArray jsonArray = jsonObject.getJSONArray("data");
 
 					for (int i = 0 ; i<jsonArray.length() ; i++){
+
+
 						JSONObject object = jsonArray.getJSONObject(i);
 						PeriodModel BatchModel = new PeriodModel();
 						BatchModel.setId(String.valueOf(object.getInt("mobile_schedule_id")));
@@ -515,11 +590,18 @@ public class AddAssignment extends Fragment {
 						mDataset3.add(BatchModel);
 					}
 
+
+						PeriodModel BatchModel = new PeriodModel();
+						BatchModel.setId(String.valueOf(""));
+						BatchModel.setPeriod("Please select period");
+						mDataset3.add(BatchModel);
+
 					SpinAdapter4 adapter = new SpinAdapter4(getActivity(),
 							android.R.layout.simple_spinner_item,
 							mDataset3);
+					adapter.setDropDownViewResource(R.layout.spinner_item);
 					period.setAdapter(adapter);
-
+					period.setSelection(adapter.getCount());
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -549,6 +631,78 @@ public class AddAssignment extends Fragment {
 
 	}
 
+
+	public static class DatePickerFragment1 extends DialogFragment
+			implements DatePickerDialog.OnDateSetListener {
+
+		private String formattedDate;
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			final Calendar c = Calendar.getInstance();
+			int year = c.get(Calendar.YEAR);
+			int month = c.get(Calendar.MONTH);
+			int day = c.get(Calendar.DAY_OF_MONTH);
+			DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
+			//dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+			return  dialog;
+		}
+
+		public void onDateSet(DatePicker view, int year, int month, int day) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(year, month, day);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			String dateString = dateFormat.format(calendar.getTime());
+			try {
+				if(!date2.getText().toString().equals("   Select Start Date:")) {
+					if (dateFormat.parse(date2.getText().toString()).after(dateFormat.parse(dateString))) {
+						Toast.makeText(getActivity(), "Please select correct date", Toast.LENGTH_SHORT).show();
+						return;
+					}
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			date.setText(dateString);
+		}
+	}
+
+
+	public static class DatePickerFragment2 extends DialogFragment
+			implements DatePickerDialog.OnDateSetListener {
+
+		private String formattedDate;
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			final Calendar c = Calendar.getInstance();
+			int year = c.get(Calendar.YEAR);
+			int month = c.get(Calendar.MONTH);
+			int day = c.get(Calendar.DAY_OF_MONTH);
+			DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
+			dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+			return  dialog;
+		}
+
+		public void onDateSet(DatePicker view, int year, int month, int day) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(year, month, day);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			String dateString = dateFormat.format(calendar.getTime());
+			try {
+
+				if(!date.getText().toString().equals("   Select End Date:")){
+					if(dateFormat.parse(date.getText().toString()).before(dateFormat.parse(dateString))) {
+						Toast.makeText(getActivity(),"Please select correct date",Toast.LENGTH_SHORT).show();
+						return;
+					}
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			date2.setText(dateString);
+		}
+	}
 
 
 }

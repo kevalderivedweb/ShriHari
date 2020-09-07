@@ -73,6 +73,13 @@ public class Assignment extends Fragment {
 
 		session = new UserSession(getActivity());
 
+		if(session.getUserType().equals("admin")){
+			view.findViewById(R.id.add_btn).setVisibility(View.VISIBLE);
+		}else {
+			view.findViewById(R.id.add_btn).setVisibility(View.GONE);
+		}
+
+
 		recyleview = view.findViewById(R.id.recyleview);
 		recyleview.setHasFixedSize(true);
 		recyleview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -122,6 +129,7 @@ public class Assignment extends Fragment {
 			public void onResponse(String response) {
 				Log.e("Response", response + " null");
 				progressDialog.dismiss();
+				mDataset.clear();
 
 				JSONObject jsonObject = null;
 				try {
@@ -139,6 +147,8 @@ public class Assignment extends Fragment {
 						announcementModel.setDue_date(object.getString("due_date"));
 						announcementModel.setStandard(object.getString("standard"));
 						announcementModel.setBatch(object.getString("batch"));
+						announcementModel.setSubject(object.getString("subject"));
+						announcementModel.setPeriod(object.getString("period"));
 						mDataset.add(announcementModel);
 					}
 

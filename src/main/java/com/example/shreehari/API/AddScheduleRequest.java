@@ -24,7 +24,7 @@ public class AddScheduleRequest extends StringRequest {
             String end_time,
             String branch_id,
             String class_room,Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, ServerUtils.BASE_URL+"add-schedule", listener, null);
+        super(Method.POST, ServerUtils.BASE_URL+"add-schedule", listener, null);
         parameters = new HashMap<>();
         parameters.put("subject_id", subject_id);
         parameters.put("standard_id", standard_id);

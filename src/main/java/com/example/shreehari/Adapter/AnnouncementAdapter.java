@@ -1,5 +1,6 @@
 package com.example.shreehari.Adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,13 +60,16 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.title.setText(mDataset.get(position).getTitle());
         holder.sendby.setText(mDataset.get(position).getSend_by());
         holder.date.setText(mDataset.get(position).getDate());
-      // holder.letter.setText(mDataset.get(position).getTitle());
+        Character character = mDataset.get(position).getTitle().charAt(0);
+       holder.letter.setText(""+character.toString().toUpperCase()
+               );
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

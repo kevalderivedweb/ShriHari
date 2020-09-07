@@ -55,7 +55,8 @@
                 android:background="@color/colorPrimary"
                 android:layout_weight="1">
 
-                <TextView
+                <Spinner
+                    android:id="@+id/standard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/txt_color"
@@ -63,11 +64,9 @@
                     android:layout_weight="0.5"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_marginRight="5dp"
-                    android:drawableRight="@drawable/ic_down"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
-                    android:text="IELTS"
+                    android:text="Standard"
                     android:textSize="20dp"/>
 
             </LinearLayout>
@@ -80,7 +79,8 @@
                 android:background="@color/colorPrimary"
                 android:layout_weight="1">
 
-                <TextView
+                <Spinner
+                    android:id="@+id/batch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/txt_color"
@@ -88,11 +88,8 @@
                     android:layout_weight="0.5"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_marginRight="5dp"
-                    android:drawableRight="@drawable/ic_down"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
-                    android:text="Batch"
                     android:textSize="20dp"/>
 
             </LinearLayout>
@@ -101,78 +98,11 @@
 
         </LinearLayout>
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
-                <include layout="@layout/item_exam"
-                    android:id="@+id/pd1"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"/>
-                <include layout="@layout/item_exam"/>
-
-
-            </LinearLayout>
-
-        </ScrollView>
-
+            android:id="@+id/recyleview"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

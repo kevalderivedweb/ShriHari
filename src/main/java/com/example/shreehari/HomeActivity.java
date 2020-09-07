@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -23,6 +24,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import com.bumptech.glide.Glide;
+import com.example.shreehari.UserSession.UserSession;
 import com.example.shreehari.ui.AddAssignment;
 import com.example.shreehari.ui.AddSchedule;
 import com.example.shreehari.ui.Announcements;
@@ -37,12 +40,16 @@ import com.example.shreehari.ui.Leave;
 import com.example.shreehari.ui.Notification;
 import com.example.shreehari.ui.Profile;
 import com.example.shreehari.ui.Result;
+import com.example.shreehari.ui.ResultExamName;
 import com.example.shreehari.ui.Schedule;
 import com.example.shreehari.ui.StudentSearch;
 import com.example.shreehari.ui.Visa;
 import com.google.android.material.navigation.NavigationView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class HomeActivity extends AppCompatActivity {
+
 
     private AppBarConfiguration mAppBarConfiguration;
     private ImageView drawer_menu;
@@ -56,14 +63,26 @@ public class HomeActivity extends AppCompatActivity {
     private LinearLayout ln_extra;
     private LinearLayout ln_dashboard;
     private LinearLayout ln_connect;
+    private TextView NAME1,NAME2,NAME3,NAME4;
+    private TextView reg_no;
+    private TextView regdate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        checkPermission();
+
+
+        UserSession userSession = new UserSession(getApplicationContext());
         drawer_menu = findViewById(R.id.menu);
+        NAME1 = findViewById(R.id.name1);
+        NAME2 = findViewById(R.id.name2);
+        NAME3 = findViewById(R.id.name3);
+        NAME4 = findViewById(R.id.name_ds);
+        reg_no = findViewById(R.id.reg_no);
+        regdate = findViewById(R.id.regdate);
         ln_assignment = findViewById(R.id.ln_assignment);
         ln_dashboard = findViewById(R.id.ln_dashboard);
         ln_visa = findViewById(R.id.ln_visa);
@@ -90,7 +109,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        replaceFragment(R.id.nav_host_fragment,new Dashboard(),"Fragment",null);
+        addFragment(R.id.nav_host_fragment,new Dashboard(),"Fragment");
 
         ln_dashboard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,8 +157,19 @@ public class HomeActivity extends AppCompatActivity {
         ln_result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(R.id.nav_host_fragment,new Result(),"Fragment",null);
-                drawer.closeDrawer(Gravity.LEFT);
+
+                if(userSession.getUserType().equals("admin")){
+                    replaceFragment(R.id.nav_host_fragment,new Result(),"Fragment",null);
+                    drawer.closeDrawer(Gravity.LEFT);
+                }else{
+                    ResultExamName fragobj = new ResultExamName();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Id", userSession.getUserId());
+                    fragobj.setArguments(bundle);
+                    replaceFragment(R.id.nav_host_fragment,fragobj,"Fragment",null);
+                    drawer.closeDrawer(Gravity.LEFT);
+                }
+
             }
         });
 
@@ -230,9 +260,20 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+        NAME1.setText(userSession.getName()+ " " + userSession.getLastName());
+        NAME2.setText(userSession.getName()+ " " + userSession.getLastName());
+        NAME3.setText(userSession.getName()+ " " + userSession.getLastName());
+        NAME4.setText(userSession.getName()+ " " + userSession.getLastName());
+        reg_no.setText("ILETS Reg.No : "+userSession.getRegistrationNO());
+        regdate.setText("Registered since "+ userSession.getRegDate()+"\nYou are Login as student");
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 
+        CircleImageView imageView = (CircleImageView) findViewById(R.id.profile_image1);
+        CircleImageView imageView1 = (CircleImageView) findViewById(R.id.profile_image2);
+        Glide.with(this).load(userSession.getProfile()).into(imageView1);
+        Glide.with(this).load(userSession.getProfile()).into(imageView);
+       // checkPermission();
     }
 
 

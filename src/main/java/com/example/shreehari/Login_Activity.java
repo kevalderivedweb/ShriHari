@@ -64,7 +64,13 @@ public class Login_Activity extends AppCompatActivity {
         findViewById(R.id.login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Check_Email(etName.getText().toString(),userSession.getFirebaseToken());
+
+                if(etName.getText().toString().isEmpty()){
+                    Toast.makeText(Login_Activity.this,"Please enter your mobile number or email",Toast.LENGTH_SHORT).show();
+                }else {
+                    Check_Email(etName.getText().toString(),userSession.getFirebaseToken());
+                }
+
             }
         });
     }
@@ -94,11 +100,17 @@ public class Login_Activity extends AppCompatActivity {
                         if(jsonObject.getJSONObject("data").getInt("is_exists_mpin")==0){
                             Intent intent=new Intent(Login_Activity.this, OTP_Activity.class);
                             intent.putExtra("Email",Email);
+                            intent.putExtra("Name",jsonObject.getJSONObject("data").getString("first_name"));
+                            intent.putExtra("LastName",jsonObject.getJSONObject("data").getString("last_name"));
+                            intent.putExtra("profile_pic",jsonObject.getJSONObject("data").getString("profile_pic"));
                             startActivity(intent);
                             overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                             finish();
                         }else {
                             Intent intent=new Intent(Login_Activity.this, SetMPin_Activity.class);
+                            intent.putExtra("Name",jsonObject.getJSONObject("data").getString("first_name"));
+                            intent.putExtra("LastName",jsonObject.getJSONObject("data").getString("last_name"));
+                            intent.putExtra("profile_pic",jsonObject.getJSONObject("data").getString("profile_pic"));
                             startActivity(intent);
                             overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                             finish();

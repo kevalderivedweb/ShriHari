@@ -9,6 +9,8 @@ public class AssignmentModel {
     public  String standard;
     public  String batch;
     private String id;
+    private String period;
+    private String subject;
 
     public String getClass_work() {
         return class_work;
@@ -64,6 +66,23 @@ public class AssignmentModel {
 
     public String getId() {
         return id;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setSubject(String subject) {
+
+        this.subject = subject;
+    }
+
+    public String getSubject() {
+        return subject;
     }
 }
 

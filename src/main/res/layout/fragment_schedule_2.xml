@@ -85,12 +85,11 @@
 
             </LinearLayout>
 
-
-                <CalendarView
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    ></CalendarView>
-
+                    android:id="@+id/recyleview"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"/>
 
 <!--
 

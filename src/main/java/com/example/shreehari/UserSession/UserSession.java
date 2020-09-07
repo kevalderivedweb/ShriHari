@@ -35,6 +35,8 @@ public class UserSession {
 
     // User name (make variable public to access from outside)
     public static final String KEY_NAME = "name";
+    public static final String KEY_REGNO = "KEY_REGNO";
+    public static final String KEY_REGDATE = "KEY_REGDATE";
     public static final String KEY_PARENT_NAME = "name";
     public static final String KEY_MNAME = "KEY_MNAME";
     public static final String KEY_LNAME = "KEY_LNAME";
@@ -105,7 +107,7 @@ public class UserSession {
             , String coaching_student_id
             , String branch_id
             , String parent_id
-            , String APIToken) {
+            , String APIToken,String coaching_reg_no,String registered_date) {
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -116,6 +118,8 @@ public class UserSession {
         editor.putString(KEY_COACH_STUDENT, coaching_student_id);
         editor.putString(KEY_BRANCH, branch_id);
         editor.putString(KEY_PARENT, parent_id);
+        editor.putString(KEY_REGDATE, registered_date);
+        editor.putString(KEY_REGNO, coaching_reg_no);
 
         editor.putString(KEY_NAME, first_name);
         editor.putString(KEY_LNAME, last_name);
@@ -193,6 +197,22 @@ public class UserSession {
     public String getAddress() {
         return pref.getString(KEY_ADDRESS, "");
     }
+    public String getUserType() {
+        return pref.getString(KEY_USERTYPE, "");
+    }
+    public String getName() {
+        return pref.getString(KEY_NAME, "");
+    }
+
+    public String getRegistrationNO() {
+        return pref.getString(KEY_REGNO, "");
+    }
+    public String getRegDate() {
+        return pref.getString(KEY_REGDATE, "");
+    }
+    public String getLastName() {
+        return pref.getString(KEY_LNAME, "");
+    }
 
     public String getAPIToken() {
         return pref.getString(KEY_APITOKEN, "");
@@ -209,6 +229,9 @@ public class UserSession {
 
     public String getBranchId() {
         return pref.getString(KEY_BRANCH, "");
+    }
+    public String getProfile() {
+        return pref.getString(KEY_PROFILE, "");
     }
 
 
