@@ -15,8 +15,8 @@ public class GetExamRequest extends StringRequest {
 
     private Map<String, String> parameters;
 
-    public GetExamRequest(String standard_id, String batch_id, Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, ServerUtils.BASE_URL+"get-exams?standard_id="+standard_id+"&batch_id="+batch_id, listener, null);
+    public GetExamRequest(String page,String standard_id, String batch_id, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        super(Method.GET, ServerUtils.BASE_URL+"get-exams?standard_id="+standard_id+"&batch_id="+batch_id+"&page="+page, listener, null);
         parameters = new HashMap<>();
 
     }

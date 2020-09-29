@@ -16,7 +16,7 @@ public class GetAnnouncementRequestFilter extends StringRequest {
     private Map<String, String> parameters;
 
     public GetAnnouncementRequestFilter(String type, String start_date, String end_date,Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, ServerUtils.BASE_URL+"get-announcement?start_date="+start_date+"&end_date="+end_date+"&group="+type, listener, null);
+        super(Method.GET, ServerUtils.BASE_URL+"get-announcement?start_date="+start_date+"&end_date="+end_date+"&group="+type.toLowerCase(), listener, null);
         parameters = new HashMap<>();
 
     }

@@ -98,6 +98,10 @@ public class AddLeave extends Fragment {
 		time.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				if(date.getText().toString().equals("   Select  Date:")){
+					Toast.makeText(getActivity(),"Please Select start date",Toast.LENGTH_SHORT).show();
+					return;
+				}
 				DialogFragment newFragment = new DatePickerFragment2();
 				newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
 
@@ -123,7 +127,7 @@ public class AddLeave extends Fragment {
 					Toast.makeText(getActivity(),"Please Enter Remark",Toast.LENGTH_SHORT).show();
 				}else if((date.getText().toString().equals("   Select  Date:"))){
 					Toast.makeText(getActivity(),"Please Select Date",Toast.LENGTH_SHORT).show();
-				}else if((time.getText().toString().equals("   Select Time :"))){
+				}else if((time.getText().toString().equals("   Select Date:"))){
 					Toast.makeText(getActivity(),"Please Select Date",Toast.LENGTH_SHORT).show();
 				}else {
 					AddLeave(date.getText().toString(),time.getText().toString(),topic.getText().toString(),essay.getText().toString());
@@ -158,7 +162,7 @@ public class AddLeave extends Fragment {
 			int month = c.get(Calendar.MONTH);
 			int day = c.get(Calendar.DAY_OF_MONTH);
 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
-			//dialog.getDatePicker().setMaxDate(c.getTimeInMillis());/
+			dialog.getDatePicker().setMinDate(c.getTimeInMillis());
 			return  dialog;
 		}
 
@@ -167,14 +171,7 @@ public class AddLeave extends Fragment {
 			calendar.set(year, month, day);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String dateString = dateFormat.format(calendar.getTime());
-			try {
-				if (dateFormat.parse(formattedDate_abc).after(dateFormat.parse(dateString))) {
-					Toast.makeText(getActivity(), "Please select correct date", Toast.LENGTH_SHORT).show();
-					return;
-				}
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+
 			date.setText(dateString);
 
 
@@ -196,6 +193,14 @@ public class AddLeave extends Fragment {
 			int day = c.get(Calendar.DAY_OF_MONTH);
 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
 			//dialog.getDatePicker().setMaxDate(c.getTimeInMillis());/
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			try {
+				Date datetostring = dateFormat.parse(date.getText().toString());
+				dialog.getDatePicker().setMinDate(datetostring.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
 			return  dialog;
 		}
 
@@ -204,14 +209,6 @@ public class AddLeave extends Fragment {
 			calendar.set(year, month, day);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String dateString = dateFormat.format(calendar.getTime());
-			try {
-				if (dateFormat.parse(formattedDate_abc).after(dateFormat.parse(dateString))) {
-					Toast.makeText(getActivity(), "Please select correct date", Toast.LENGTH_SHORT).show();
-					return;
-				}
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
 			time.setText(dateString);
 
 
@@ -254,7 +251,7 @@ public class AddLeave extends Fragment {
 		}){@Override
 		public Map<String, String> getHeaders() throws AuthFailureError {
 			Map<String, String> params = new HashMap<String, String>();
-			// params.put("Accept", "application/json");
+			 params.put("Accept", "application/json");
 			params.put("Authorization","Bearer "+ session.getAPIToken());
 			return params;
 		}};

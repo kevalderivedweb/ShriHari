@@ -42,7 +42,9 @@ import com.example.shreehari.ui.Profile;
 import com.example.shreehari.ui.Result;
 import com.example.shreehari.ui.ResultExamName;
 import com.example.shreehari.ui.Schedule;
+import com.example.shreehari.ui.StudentAttendance;
 import com.example.shreehari.ui.StudentSearch;
+import com.example.shreehari.ui.StudentSetting;
 import com.example.shreehari.ui.Visa;
 import com.google.android.material.navigation.NavigationView;
 
@@ -63,9 +65,14 @@ public class HomeActivity extends AppCompatActivity {
     private LinearLayout ln_extra;
     private LinearLayout ln_dashboard;
     private LinearLayout ln_connect;
+    private LinearLayout ln_setting;
+    private View ln_setting_view;
     private TextView NAME1,NAME2,NAME3,NAME4;
     private TextView reg_no;
     private TextView regdate;
+    private View ln_profile_view;
+    private View ln_student_view;
+    private LinearLayout ln_logout;
 
 
     @Override
@@ -93,6 +100,8 @@ public class HomeActivity extends AppCompatActivity {
         ln_schedule_2 = findViewById(R.id.ln_schedule2);
         ln_announcements = findViewById(R.id.ln_announcements);
         ln_profile = findViewById(R.id.ln_profile);
+        ln_profile_view = findViewById(R.id.ln_profile_view);
+        ln_student_view = findViewById(R.id.ln_student_view);
         ln_attendance = findViewById(R.id.ln_attendance);
         ln_assignment1 = findViewById(R.id.ln_assignment1);
         ln_gallery = findViewById(R.id.ln_gallery);
@@ -100,6 +109,9 @@ public class HomeActivity extends AppCompatActivity {
         ln_leave = findViewById(R.id.ln_leave);
         ln_exam = findViewById(R.id.ln_exam);
         ln_connect = findViewById(R.id.ln_connect);
+        ln_setting = findViewById(R.id.ln_setting);
+        ln_logout = findViewById(R.id.ln_logout);
+        ln_setting_view = findViewById(R.id.ln_setting_view);
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         drawer_menu.setOnClickListener(new View.OnClickListener() {
@@ -154,12 +166,27 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        ln_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(R.id.nav_host_fragment,new StudentSetting(),"Fragment",null);
+                drawer.closeDrawer(Gravity.LEFT);
+            }
+        });
+
         ln_result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if(userSession.getUserType().equals("admin")){
                     replaceFragment(R.id.nav_host_fragment,new Result(),"Fragment",null);
+                    drawer.closeDrawer(Gravity.LEFT);
+                }else if(userSession.getUserType().equals("parent")){
+                    ResultExamName fragobj = new ResultExamName();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Id", userSession.getUserId());
+                    fragobj.setArguments(bundle);
+                    replaceFragment(R.id.nav_host_fragment,fragobj,"Fragment",null);
                     drawer.closeDrawer(Gravity.LEFT);
                 }else{
                     ResultExamName fragobj = new ResultExamName();
@@ -189,6 +216,31 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        ln_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userSession.logout();
+                Intent intent = new Intent(HomeActivity.this,Login_Activity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        if(userSession.getUserType().equals("parent")){
+            ln_setting.setVisibility(View.VISIBLE);
+            ln_setting_view.setVisibility(View.VISIBLE);
+        }else {
+            ln_setting.setVisibility(View.GONE);
+            ln_setting_view.setVisibility(View.GONE);
+        }
+        if(userSession.getUserType().equals("admin")){
+            ln_profile.setVisibility(View.GONE);
+            ln_profile_view.setVisibility(View.GONE);
+        }else {
+            ln_student.setVisibility(View.GONE);
+            ln_student_view.setVisibility(View.GONE);
+        }
+
         ln_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -208,8 +260,15 @@ public class HomeActivity extends AppCompatActivity {
         ln_attendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(R.id.nav_host_fragment,new Attendance(),"Fragment",null);
-                drawer.closeDrawer(Gravity.LEFT);
+
+                if(userSession.getUserType().equals("admin")){
+                    replaceFragment(R.id.nav_host_fragment,new Attendance(),"Fragment",null);
+                    drawer.closeDrawer(Gravity.LEFT);
+                }else {
+                    replaceFragment(R.id.nav_host_fragment,new StudentAttendance(),"Fragment",null);
+                    drawer.closeDrawer(Gravity.LEFT);
+                }
+
             }
         });
 
@@ -264,8 +323,8 @@ public class HomeActivity extends AppCompatActivity {
         NAME2.setText(userSession.getName()+ " " + userSession.getLastName());
         NAME3.setText(userSession.getName()+ " " + userSession.getLastName());
         NAME4.setText(userSession.getName()+ " " + userSession.getLastName());
-        reg_no.setText("ILETS Reg.No : "+userSession.getRegistrationNO());
-        regdate.setText("Registered since "+ userSession.getRegDate()+"\nYou are Login as student");
+        reg_no.setText("ILETS Reg.No : "+userSession.getRegistrationNumber());
+        regdate.setText("Registered since "+ userSession.getRegistrationDate() +"\nYou are Login as "+userSession.getUserType());
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 
@@ -299,7 +358,6 @@ public class HomeActivity extends AppCompatActivity {
                 .replace(containerViewId, fragment, fragmentTag)
                 .addToBackStack(backStackStateName)
                 .commit();
-  /*      hello*/
 
     }
 

@@ -2,6 +2,7 @@ package com.example.shreehari;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -30,14 +31,15 @@ import org.json.JSONObject;
 public class Login_Activity extends AppCompatActivity {
 
     private RequestQueue requestQueue;
-/*
-    qwertyuiop@1234567890
-*/
+    private UserSession userSession;
+
+    /*
+        qwertyuiop@1234567890
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
 
@@ -59,7 +61,7 @@ public class Login_Activity extends AppCompatActivity {
         final EditText etName = findViewById(R.id.etName);
 
 
-        UserSession userSession = new UserSession(getApplicationContext());
+        userSession = new UserSession(getApplicationContext());
 
         findViewById(R.id.login).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +86,6 @@ public class Login_Activity extends AppCompatActivity {
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f)
                 .show();
-
         CheckEmailRequest loginRequest = new CheckEmailRequest(Email, device_token,new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -96,6 +97,12 @@ public class Login_Activity extends AppCompatActivity {
                     jsonObject = new JSONObject(response);
                     Toast.makeText(Login_Activity.this,jsonObject.getString("ResponseMsg"),Toast.LENGTH_SHORT).show();
                     if (jsonObject.getInt("ResponseCode")==200) {
+
+
+                        userSession.setRegistrationDate(jsonObject.getJSONObject("data").getString("registered_date"));
+                        userSession.setRegistrationNumber(jsonObject.getJSONObject("data").getString("coaching_reg_no"));
+
+
 
                         if(jsonObject.getJSONObject("data").getInt("is_exists_mpin")==0){
                             Intent intent=new Intent(Login_Activity.this, OTP_Activity.class);

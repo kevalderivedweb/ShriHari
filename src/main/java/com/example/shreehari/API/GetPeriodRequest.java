@@ -15,8 +15,8 @@ public class GetPeriodRequest extends StringRequest {
 
     private Map<String, String> parameters;
 
-    public GetPeriodRequest(Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, ServerUtils.BASE_URL+"get-period?standard_id=1&batch_id=1", listener, null);
+    public GetPeriodRequest(String standard,String batch,Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        super(Method.GET, ServerUtils.BASE_URL+"get-period?standard_id="+batch+"&batch_id="+standard, listener, null);
         parameters = new HashMap<>();
 
     }

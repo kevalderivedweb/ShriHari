@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -68,6 +69,8 @@ public class GalleryDetails extends Fragment {
 	private ArrayList<String> mImageStringArray = new ArrayList<>();
 	private int last_size;
 	private String Mpage = "1";
+	private String CategoryName;
+	private TextView name;
 
 
 	// Store instance variables based on arguments passed
@@ -90,12 +93,15 @@ public class GalleryDetails extends Fragment {
 		mDataset.clear();
 		try {
 			Id = getArguments().getString("Id");
+			CategoryName = getArguments().getString("CategoryName");
 
 		} catch (Exception e) {
 
 		}
 
 		download = view.findViewById(R.id.download);
+		name  = view.findViewById(R.id.name);
+		name.setText(CategoryName);
 		recyleview = view.findViewById(R.id.recyleview);
 		recyleview.setHasFixedSize(true);
 		GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);
@@ -120,6 +126,7 @@ public class GalleryDetails extends Fragment {
 				}else {
 					Intent intent = new Intent(getActivity(), GallaryView.class);
 					intent.putExtra("Img_url",mDataset.get(item).getCategory_image());
+					intent.putExtra("CategoryName",CategoryName);
 					startActivity(intent);
 				}
 

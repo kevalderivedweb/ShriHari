@@ -182,7 +182,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:layout_marginBottom="5dp"
-                android:text="Present : 243"
+                android:text="Present : 0"
                 android:textSize="15dp"/>
 
             <TextView
@@ -210,7 +210,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:layout_marginBottom="5dp"
-                android:text="Total : 243"
+                android:text="Total : 0"
                 android:textSize="15dp"/>
 
         </LinearLayout>

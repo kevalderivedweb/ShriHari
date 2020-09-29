@@ -1,5 +1,6 @@
 package com.example.shreehari.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.shreehari.API.GetLeaveDetailsRequest;
 import com.example.shreehari.Adapter.LeaveAdapter;
+import com.example.shreehari.EndlessRecyclerViewScrollListener;
 import com.example.shreehari.Model.LeaveModel;
 import com.example.shreehari.R;
 import com.example.shreehari.UserSession.UserSession;
@@ -43,7 +45,9 @@ public class Tab2 extends Fragment {
     private RequestQueue requestQueue;
     private UserSession session;
     private TextView textView;
-
+    private LinearLayoutManager linearlayout;
+    private int last_size;
+    private String Mpage = "1";
 
     //Overriden method onCreateView
     @Override
@@ -57,11 +61,12 @@ public class Tab2 extends Fragment {
 
         session = new UserSession(getActivity());
 
-
+        mDataset.clear();
         recyleview = view.findViewById(R.id.recyleview);
         textView = view.findViewById(R.id.textView);
         recyleview.setHasFixedSize(true);
-        recyleview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        linearlayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyleview.setLayoutManager(linearlayout);
         mAdapter = new LeaveAdapter(mDataset, new LeaveAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int item) {
@@ -69,12 +74,23 @@ public class Tab2 extends Fragment {
             }
         });
         recyleview.setAdapter(mAdapter);
-        GetResult();
+        recyleview.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayout) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                Log.e("PageStatus",page + "  " + last_size);
+                if (page!=last_size){
+                    Mpage = String.valueOf(page+1);
+                    GetResult(Mpage);
+                }
+            }
+        });
+
+        GetResult(Mpage);
 
         return view;
     }
 
-    private void GetResult() {
+    private void GetResult(String page) {
 
 
         final KProgressHUD progressDialog = KProgressHUD.create(getActivity())
@@ -85,16 +101,17 @@ public class Tab2 extends Fragment {
                 .setDimAmount(0.5f)
                 .show();
 
-        GetLeaveDetailsRequest loginRequest = new GetLeaveDetailsRequest("2",new Response.Listener<String>() {
+        GetLeaveDetailsRequest loginRequest = new GetLeaveDetailsRequest(page,"2",new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Response", response + " null");
+                Log.e("ResponseTab2", response + " null");
                 progressDialog.dismiss();
-                mDataset.clear();
+
 
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response);
+                    last_size = jsonObject.getInt("last_page");
 
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
 
@@ -109,11 +126,19 @@ public class Tab2 extends Fragment {
                         announcementModel.setBreak_from(object.getString("break_from"));
                         announcementModel.setBreak_to(object.getString("break_to"));
                         announcementModel.setNo_of_days(object.getString("no_of_days"));
-                        announcementModel.setRemarks(object.getString("remarks"));
-                        announcementModel.setLeave_status(object.getString("leave_status"));
-                        announcementModel.setFirst_name(object.getString("first_name"));
-                        announcementModel.setLast_name(object.getString("last_name"));
 
+                        announcementModel.setLeave_status(object.getString("leave_status"));
+
+
+                        if(session.getUserType().equals("admin")){
+                            announcementModel.setRemarks(object.getString("remarks"));
+                            announcementModel.setFirst_name(object.getString("first_name"));
+                            announcementModel.setLast_name(object.getString("last_name"));
+                        }else {
+                            announcementModel.setRemarks(object.getString("no_of_days"));
+                            announcementModel.setFirst_name(object.getString("remarks"));
+                            announcementModel.setLast_name("");
+                        }
                         mDataset.add(announcementModel);
 
                     }
@@ -121,7 +146,7 @@ public class Tab2 extends Fragment {
                     mAdapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
-
+                    Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
 
@@ -150,4 +175,13 @@ public class Tab2 extends Fragment {
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // Refresh your fragment here
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+            Log.i("IsRefresh", "Yes");
+        }
+    }
 }

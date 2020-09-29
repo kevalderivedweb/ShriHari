@@ -34,6 +34,7 @@ import com.example.shreehari.Adapter.AttandanceAdapter;
 import com.example.shreehari.Adapter.ResultAdapter;
 import com.example.shreehari.Adapter.SpinAdapter;
 import com.example.shreehari.Adapter.SpinAdapter2;
+import com.example.shreehari.EndlessRecyclerViewScrollListener;
 import com.example.shreehari.Model.AssignmentModel;
 import com.example.shreehari.Model.AttandanceModel;
 import com.example.shreehari.Model.BatchModel;
@@ -66,7 +67,9 @@ public class Result extends Fragment {
 	private static ArrayList<StandardModel> mDataset2 = new ArrayList<>();
 	private int standard_pos= 0;
 	private int batch_pos= 0;
-
+	private LinearLayoutManager linearlayout;
+	private int last_size;
+	private String Mpage = "1";
 	// Store instance variables based on arguments passed
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -82,12 +85,15 @@ public class Result extends Fragment {
 
 		requestQueue = Volley.newRequestQueue(getActivity());//Creating the RequestQueue
 
+		mDataset.clear();
+
 		session = new UserSession(getActivity());
 		standard = view.findViewById(R.id.standard);
 		batch = view.findViewById(R.id.batch);
 		recyleview = view.findViewById(R.id.recyleview);
 		recyleview.setHasFixedSize(true);
-		recyleview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+		linearlayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+		recyleview.setLayoutManager(linearlayout);
 		mAdapter = new ResultAdapter(mDataset, new ResultAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(int item) {
@@ -110,9 +116,9 @@ public class Result extends Fragment {
 				standard_pos = i;
 
 				try {
-					GetResult(mDataset2.get(standard_pos).getCoaching_id(),mDataset1.get(batch_pos).getBatch_id());
+					GetResult(Mpage,mDataset2.get(standard_pos).getCoaching_id(),mDataset1.get(batch_pos).getBatch_id());
 				}catch (Exception e){
-					GetResult("0","0");
+					GetResult(Mpage,"0","0");
 				}
 			}
 
@@ -128,10 +134,10 @@ public class Result extends Fragment {
 				batch_pos = i;
 
 				try {
-					GetResult(mDataset2.get(standard_pos).getCoaching_id(),mDataset1.get(batch_pos).getBatch_id());
+					GetResult(Mpage,mDataset2.get(standard_pos).getCoaching_id(),mDataset1.get(batch_pos).getBatch_id());
 
 				}catch (Exception e){
-					GetResult("0","0");
+					GetResult(Mpage,"0","0");
 
 				}
 			}
@@ -139,6 +145,17 @@ public class Result extends Fragment {
 			@Override
 			public void onNothingSelected(AdapterView<?> adapterView) {
 
+			}
+		});
+
+		recyleview.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayout) {
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				Log.e("PageStatus",page + "  " + last_size);
+				if (page!=last_size){
+					Mpage = String.valueOf(page+1);
+					GetResult(Mpage,mDataset2.get(standard_pos).getCoaching_id(),mDataset1.get(batch_pos).getBatch_id());
+				}
 			}
 		});
 
@@ -158,7 +175,7 @@ public class Result extends Fragment {
 				.commit();
 	}
 
-	private void GetResult(String standard_id,String batch_id) {
+	private void GetResult(String page,String standard_id,String batch_id) {
 
 
 		final KProgressHUD progressDialog = KProgressHUD.create(getActivity())
@@ -169,17 +186,17 @@ public class Result extends Fragment {
 				.setDimAmount(0.5f)
 				.show();
 
-		GetResultRequest loginRequest = new GetResultRequest(standard_id,batch_id,new Response.Listener<String>() {
+		GetResultRequest loginRequest = new GetResultRequest(page,standard_id,batch_id,new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Log.e("Response", response + " null");
 				progressDialog.dismiss();
-				mDataset.clear();
+
 
 				JSONObject jsonObject = null;
 				try {
 					jsonObject = new JSONObject(response);
-
+					last_size = jsonObject.getInt("last_page");
 					JSONArray jsonArray = jsonObject.getJSONArray("data");
 
 					for (int i = 0 ; i<jsonArray.length() ; i++){

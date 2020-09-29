@@ -2,6 +2,7 @@ package com.example.shreehari;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -22,11 +23,17 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.bumptech.glide.Glide;
 import com.example.shreehari.API.SetMPINRequest;
+import com.example.shreehari.Model.GallaryModel;
 import com.example.shreehari.UserSession.UserSession;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,7 +55,6 @@ public class SetMPin_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_mpin);
 
         requestQueue = Volley.newRequestQueue(SetMPin_Activity.this);//Creating the RequestQueue
@@ -101,6 +107,8 @@ public class SetMPin_Activity extends AppCompatActivity {
                             + et3.getText().toString()
                             + et4.getText().toString();
                     Set_MPIN(Password, userSession.getFirebaseToken());
+                  //  MPIN(Password, userSession.getFirebaseToken());
+
                 }
             }
         });
@@ -165,6 +173,89 @@ public class SetMPin_Activity extends AppCompatActivity {
         }
     }
 
+    private void MPIN(final String mpin,final  String token){
+        final KProgressHUD progressDialog = KProgressHUD.create(SetMPin_Activity.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+        AndroidNetworking.get("http://teqcoder.com/shreeharicrm/api/api/set-mpin")
+                .addHeaders("Authorization", "Bearer "+ session.getAPIToken())
+                .addPathParameter("m_pin",mpin)
+                .addPathParameter("device_type","android")
+                .addPathParameter("device_token",token)
+                .setTag("test")
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        Log.e("Response",response);
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(response);
+                            //    Toast.makeText(SetMPin_Activity.this,jsonObject.getString("ResponseMsg"),Toast.LENGTH_SHORT).show();
+
+                            if (jsonObject.getInt("ResponseCode")==200) {
+
+                                JSONObject object = jsonObject.getJSONObject("data");
+                                String mobile_user_master_id = String.valueOf(object.getInt("mobile_user_master_id"));
+                                String first_name = object.getString("first_name");
+                                String last_name = object.getString("last_name");
+                                String profile_pic = object.getString("profile_pic");
+                                String mobile_no = object.getString("mobile_no");
+                                String email = object.getString("email");
+                                String user_type = object.getString("user_type");
+                                String coaching_student_id = String.valueOf(object.getInt("coaching_student_id"));
+                                String branch_id = String.valueOf(object.getInt("branch_id"));
+                                String parent_id = String.valueOf(object.getInt("parent_id"));
+                                String api_token = object.getString("api_token");
+
+
+                                String coaching_reg_no = "4/20";
+                                // String coaching_reg_no = object.getString("coaching_reg_no");
+                                //  String registered_date = object.getString("registered_date");
+                                String registered_date = "24 August,2020";
+                                session.createLoginSession(mobile_user_master_id,
+                                        first_name
+                                        ,last_name
+                                        ,profile_pic
+                                        ,mobile_no
+                                        ,email
+                                        ,user_type
+                                        ,coaching_student_id
+                                        ,branch_id
+                                        ,parent_id
+                                        ,api_token);
+
+
+                                Intent intent=new Intent(SetMPin_Activity.this, HomeActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                                overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        progressDialog.dismiss();
+                        Log.e("Response",anError.getErrorBody());
+                    }
+                });
+
+    }
+
     public void Set_MPIN(final String mpin,final  String token) {
 
         final KProgressHUD progressDialog = KProgressHUD.create(SetMPin_Activity.this)
@@ -175,10 +266,11 @@ public class SetMPin_Activity extends AppCompatActivity {
                 .setDimAmount(0.5f)
                 .show();
 
+
         SetMPINRequest loginRequest = new SetMPINRequest(mpin,token, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Response", response + " null");
+                Log.e("ResponseLogin", response + " null");
                 progressDialog.dismiss();
 
                 JSONObject jsonObject = null;
@@ -216,7 +308,7 @@ public class SetMPin_Activity extends AppCompatActivity {
                                 ,coaching_student_id
                                 ,branch_id
                                 ,parent_id
-                                ,api_token,coaching_reg_no,registered_date);
+                                ,api_token);
 
 
                         Intent intent=new Intent(SetMPin_Activity.this, HomeActivity.class);

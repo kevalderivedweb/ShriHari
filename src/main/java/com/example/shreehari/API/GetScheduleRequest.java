@@ -15,8 +15,8 @@ public class GetScheduleRequest extends StringRequest {
 
     private Map<String, String> parameters;
 
-    public GetScheduleRequest(Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, ServerUtils.BASE_URL+"get-schedule", listener, null);
+    public GetScheduleRequest(String page,Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        super(Method.GET, ServerUtils.BASE_URL+"get-schedule?page="+page, listener, null);
         parameters = new HashMap<>();
 
     }

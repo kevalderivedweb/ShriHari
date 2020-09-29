@@ -27,6 +27,7 @@ import com.example.shreehari.API.GetAssignmentRequest;
 import com.example.shreehari.API.GetScheduleRequest;
 import com.example.shreehari.Adapter.AssignmentAdapter;
 import com.example.shreehari.Adapter.ScheduleAdapter;
+import com.example.shreehari.EndlessRecyclerViewScrollListener;
 import com.example.shreehari.Model.AssignmentModel;
 import com.example.shreehari.Model.ScheduleModel;
 import com.example.shreehari.R;
@@ -52,8 +53,10 @@ public class Schedule extends Fragment {
 	private RecyclerView recyleview;
 	private ArrayList<ScheduleModel> mDataset = new ArrayList<>();
 	private ScheduleAdapter mAdapter;
+	private LinearLayoutManager linearlayout;
 
-
+	private int last_size;
+	private String Mpage = "1";
 	// Store instance variables based on arguments passed
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -83,13 +86,16 @@ public class Schedule extends Fragment {
 
 		if(session.getUserType().equals("admin")){
 			view.findViewById(R.id.ln_addschedule).setVisibility(View.VISIBLE);
+		}else if(session.getUserType().equals("parent")){
+			view.findViewById(R.id.ln_addschedule).setVisibility(View.GONE);
 		}else {
 			view.findViewById(R.id.ln_addschedule).setVisibility(View.GONE);
 		}
-
+		mDataset.clear();
 		recyleview = view.findViewById(R.id.recyleview);
 		recyleview.setHasFixedSize(true);
-		recyleview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+		linearlayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+		recyleview.setLayoutManager(linearlayout);
 		mAdapter = new ScheduleAdapter(mDataset, new ScheduleAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(int item) {
@@ -102,8 +108,19 @@ public class Schedule extends Fragment {
 
 			}
 		});
+		recyleview.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayout) {
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				Log.e("PageStatus",page + "  " + last_size);
+				if (page!=last_size){
+					Mpage = String.valueOf(page+1);
+					GetSchedule(Mpage);
+
+				}
+			}
+		});
 		recyleview.setAdapter(mAdapter);
-		GetSchedule();
+		GetSchedule(Mpage);
 		return view;
 	}
 	protected void replaceFragment(@IdRes int containerViewId,
@@ -117,7 +134,7 @@ public class Schedule extends Fragment {
 				.commit();
 	}
 
-	private void GetSchedule() {
+	private void GetSchedule(String page) {
 
 		final KProgressHUD progressDialog = KProgressHUD.create(getActivity())
 				.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -127,16 +144,17 @@ public class Schedule extends Fragment {
 				.setDimAmount(0.5f)
 				.show();
 
-		GetScheduleRequest loginRequest = new GetScheduleRequest(new Response.Listener<String>() {
+		GetScheduleRequest loginRequest = new GetScheduleRequest(page,new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Log.e("Response", response + " null");
 				progressDialog.dismiss();
-				mDataset.clear();
+
 
 				JSONObject jsonObject = null;
 				try {
 					jsonObject = new JSONObject(response);
+					last_size = jsonObject.getInt("last_page");
 
 					JSONArray jsonArray = jsonObject.getJSONArray("data");
 

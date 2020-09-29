@@ -15,8 +15,8 @@ public class GetStudnetRequest extends StringRequest {
 
     private Map<String, String> parameters;
 
-    public GetStudnetRequest(Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, ServerUtils.BASE_URL+"get-student-by-batch-standard?standard_id=1&batch_id=2", listener, null);
+    public GetStudnetRequest(String standard,String batch,Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        super(Method.GET, ServerUtils.BASE_URL+"get-student-by-batch-standard?standard_id="+standard+"&batch_id="+batch, listener, null);
         parameters = new HashMap<>();
 
     }

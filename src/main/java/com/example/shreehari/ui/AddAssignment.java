@@ -77,6 +77,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,12 +136,19 @@ public class AddAssignment extends Fragment {
 		done.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if(batch_pos==0||period_pos==0||standard_pos==0){
-					Toast.makeText(getActivity(),"" +
-							"Please select Batch, Period and standard",Toast.LENGTH_SHORT).show();
-				}else if(date.getText().toString().equals("   Select Start Date:")){
+
+				Log.e("AssignmentBatch",batch_pos + " " + mDataset.size());
+				Log.e("AssignmentBatch2",standard_pos + " " + mDataset2.size());
+				Log.e("AssignmentBatch",batch_pos + " " + mDataset.size());
+				if(date.getText().toString().equals("   Select Start Date:")){
 					Toast.makeText(getActivity(),"Please select Start date",Toast.LENGTH_SHORT).show();
 
+				}else if(batch_pos==mDataset.size()-1){
+					Toast.makeText(getActivity(), "Please Select Period & Batch & Standard", Toast.LENGTH_SHORT).show();
+				}else if(standard_pos==mDataset2.size()-1){
+					Toast.makeText(getActivity(), "Please Select Period & Batch & Standard", Toast.LENGTH_SHORT).show();
+				}else if(period_pos==mDataset3.size()-1){
+					Toast.makeText(getActivity(), "Please Select Period & Batch & Standard", Toast.LENGTH_SHORT).show();
 				}else if(date2.getText().toString().equals("   Select End Date:")){
 					Toast.makeText(getActivity(),"Please select End date",Toast.LENGTH_SHORT).show();
 
@@ -173,6 +181,10 @@ public class AddAssignment extends Fragment {
 		date2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				if(date.getText().toString().equals("   Select Start Date:")){
+					Toast.makeText(getActivity(),"Please Select Start Date First...",Toast.LENGTH_SHORT).show();
+					return;
+				}
 				DialogFragment newFragment = new DatePickerFragment2();
 				newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
 
@@ -186,6 +198,11 @@ public class AddAssignment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 				standard_pos = i;
+				try {
+					getPeriod(mDataset.get(batch_pos).getBatch_id(),mDataset2.get(standard_pos).getCoaching_id());
+				}catch (Exception e){
+					Log.e("Eroor",e.getMessage());
+				}
 			}
 
 			@Override
@@ -199,6 +216,13 @@ public class AddAssignment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 				batch_pos = i;
+
+				try {
+					getPeriod(mDataset.get(batch_pos).getBatch_id(),mDataset2.get(standard_pos).getCoaching_id());
+				}catch (Exception e){
+					Log.e("Eroor",e.getMessage());
+				}
+
 			}
 
 			@Override
@@ -211,6 +235,7 @@ public class AddAssignment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 				period_pos = i;
+
 			}
 
 			@Override
@@ -305,7 +330,6 @@ public class AddAssignment extends Fragment {
 			return responseString;
 
 		}
-
 		@Override
 		protected void onPostExecute(String result) {
 			Log.e("TAG", "Response from server: " + result);
@@ -568,8 +592,16 @@ public class AddAssignment extends Fragment {
 		loginRequest1.setTag("TAG");
 		requestQueue.add(loginRequest1);
 
+
+
+	}
+
+
+	public void getPeriod(String standard, String batch){
+
+		Log.e("StandardAndBatch",standard+ "  "+ batch);
 		mDataset3.clear();
-		GetPeriodRequest loginRequest2 = new GetPeriodRequest(new Response.Listener<String>() {
+		GetPeriodRequest loginRequest2 = new GetPeriodRequest(standard,batch,new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Log.e("Response", response + " null");
@@ -591,10 +623,10 @@ public class AddAssignment extends Fragment {
 					}
 
 
-						PeriodModel BatchModel = new PeriodModel();
-						BatchModel.setId(String.valueOf(""));
-						BatchModel.setPeriod("Please select period");
-						mDataset3.add(BatchModel);
+					PeriodModel BatchModel = new PeriodModel();
+					BatchModel.setId(String.valueOf(""));
+					BatchModel.setPeriod("Please select period");
+					mDataset3.add(BatchModel);
 
 					SpinAdapter4 adapter = new SpinAdapter4(getActivity(),
 							android.R.layout.simple_spinner_item,
@@ -628,9 +660,7 @@ public class AddAssignment extends Fragment {
 		}};
 		loginRequest2.setTag("TAG");
 		requestQueue.add(loginRequest2);
-
 	}
-
 
 	public static class DatePickerFragment1 extends DialogFragment
 			implements DatePickerDialog.OnDateSetListener {
@@ -644,7 +674,8 @@ public class AddAssignment extends Fragment {
 			int month = c.get(Calendar.MONTH);
 			int day = c.get(Calendar.DAY_OF_MONTH);
 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
-			//dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+
+			dialog.getDatePicker().setMinDate(c.getTimeInMillis());
 			return  dialog;
 		}
 
@@ -653,16 +684,6 @@ public class AddAssignment extends Fragment {
 			calendar.set(year, month, day);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String dateString = dateFormat.format(calendar.getTime());
-			try {
-				if(!date2.getText().toString().equals("   Select Start Date:")) {
-					if (dateFormat.parse(date2.getText().toString()).after(dateFormat.parse(dateString))) {
-						Toast.makeText(getActivity(), "Please select correct date", Toast.LENGTH_SHORT).show();
-						return;
-					}
-				}
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
 			date.setText(dateString);
 		}
 	}
@@ -680,7 +701,19 @@ public class AddAssignment extends Fragment {
 			int month = c.get(Calendar.MONTH);
 			int day = c.get(Calendar.DAY_OF_MONTH);
 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
-			dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+			try {
+				Date datetostring = dateFormat.parse(date.getText().toString());
+				dialog.getDatePicker().setMinDate(datetostring.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			/*try {
+				dialog.getDatePicker().setMinDate(dateFormat.parse(date.getText().toString()));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}*/
 			return  dialog;
 		}
 
@@ -689,17 +722,7 @@ public class AddAssignment extends Fragment {
 			calendar.set(year, month, day);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String dateString = dateFormat.format(calendar.getTime());
-			try {
 
-				if(!date.getText().toString().equals("   Select End Date:")){
-					if(dateFormat.parse(date.getText().toString()).before(dateFormat.parse(dateString))) {
-						Toast.makeText(getActivity(),"Please select correct date",Toast.LENGTH_SHORT).show();
-						return;
-					}
-				}
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
 			date2.setText(dateString);
 		}
 	}

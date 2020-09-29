@@ -2,6 +2,7 @@ package com.example.shreehari;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -46,7 +47,6 @@ public class MPin_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_mpin);
 
         requestQueue = Volley.newRequestQueue(MPin_Activity.this);//Creating the RequestQueue
@@ -169,6 +169,8 @@ public class MPin_Activity extends AppCompatActivity {
                 .setDimAmount(0.5f)
                 .show();
 
+
+
         CheckMPINlRequest loginRequest = new CheckMPINlRequest(device_token,mPin, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -208,7 +210,7 @@ public class MPin_Activity extends AppCompatActivity {
                                 ,coaching_student_id
                                 ,branch_id
                                 ,parent_id
-                                ,api_token,coaching_reg_no,registered_date);
+                                ,api_token);
 
                         Intent intent=new Intent(MPin_Activity.this, HomeActivity.class);
                         startActivity(intent);
@@ -239,7 +241,7 @@ public class MPin_Activity extends AppCompatActivity {
         }){@Override
         public Map<String, String> getHeaders() throws AuthFailureError {
             Map<String, String> params = new HashMap<String, String>();
-            // params.put("Accept", "application/json");
+             params.put("Accept", "application/json");
             params.put("Authorization","Bearer "+ session.getAPIToken());
             return params;
         }};

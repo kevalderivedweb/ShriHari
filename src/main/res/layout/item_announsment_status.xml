@@ -18,6 +18,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/txt_later"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:textColor="@color/txt_color"
@@ -25,7 +26,6 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_weight="0"
-                android:layout_marginLeft="10dp"
                 android:background="@drawable/bg_round"
                 android:text="A"
                 android:textSize="25dp"/>
@@ -34,6 +34,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
                 android:orientation="vertical">
 
 
@@ -41,9 +43,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/txt_color"
@@ -54,9 +59,10 @@
                         android:textSize="16dp"/>
 
                     <TextView
+                        android:id="@+id/number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/txt_gray"
+                        android:textColor="@color/black"
                         android:textStyle="normal"
                         android:gravity="end"
                         android:layout_gravity="center"
@@ -70,16 +76,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="4dp"
                     android:orientation="horizontal">
 
 
                     <TextView
+                        android:id="@+id/batch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/txt_gray"
+                        android:textColor="@color/black"
                         android:textStyle="normal"
                         android:gravity="start"
+                        android:visibility="visible"
                         android:text="Manish Patel[439/9]GENERAL TRENDING 9:00 To 10:00[SHI-ALL]"
                         android:textSize="8dp"/>
 

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +27,7 @@ import com.example.shreehari.API.GetLeaveDetailsRequest;
 import com.example.shreehari.Adapter.ExamAdapter;
 import com.example.shreehari.Adapter.LeaveAdapter;
 import com.example.shreehari.Adapter.LeaveAdapter2;
+import com.example.shreehari.EndlessRecyclerViewScrollListener;
 import com.example.shreehari.Model.ExamModel;
 import com.example.shreehari.Model.LeaveModel;
 import com.example.shreehari.R;
@@ -48,6 +50,9 @@ public class Tab1 extends Fragment {
     private RequestQueue requestQueue;
     private UserSession session;
     private TextView textView;
+    private LinearLayoutManager linearlayout;
+    private int last_size;
+    private String Mpage = "1";
 
 
     //Overriden method onCreateView
@@ -62,17 +67,18 @@ public class Tab1 extends Fragment {
 
         session = new UserSession(getActivity());
 
-
+        mDataset.clear();
         recyleview = view.findViewById(R.id.recyleview);
         textView = view.findViewById(R.id.textView);
         recyleview.setHasFixedSize(true);
-        recyleview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        linearlayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyleview.setLayoutManager(linearlayout);
         mAdapter = new LeaveAdapter2(getActivity(),mDataset, new LeaveAdapter2.OnItemClickListener() {
             @Override
             public void onItemClick(int pos,String item) {
 
-                if (item.equals("123")) {
-                    Toast.makeText(getActivity(),"Please select Status",Toast.LENGTH_SHORT).show();
+                if (item.equals("1a23")) {
+                   // Toast.makeText(getActivity(),"Please select Status",Toast.LENGTH_SHORT).show();
                 }else {
                     LeaveApprove(mDataset.get(pos).getCoachingbreak_id(),item);
                 }
@@ -81,13 +87,27 @@ public class Tab1 extends Fragment {
 
             }
         });
+
+
+        recyleview.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayout) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                Log.e("PageStatus",page + "  " + last_size);
+                if (page!=last_size){
+                    Mpage = String.valueOf(page+1);
+                    GetResult(Mpage);
+                }
+            }
+        });
+
+
         recyleview.setAdapter(mAdapter);
-        GetResult();
+        GetResult(Mpage);
 
         return view;
     }
 
-    private void GetResult() {
+    private void GetResult(String page) {
 
 
         final KProgressHUD progressDialog = KProgressHUD.create(getActivity())
@@ -98,16 +118,18 @@ public class Tab1 extends Fragment {
                 .setDimAmount(0.5f)
                 .show();
 
-        GetLeaveDetailsRequest loginRequest = new GetLeaveDetailsRequest("1",new Response.Listener<String>() {
+        GetLeaveDetailsRequest loginRequest = new GetLeaveDetailsRequest(page,"1",new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Response", response + " null");
+                Log.e("ResponseTab1", response + " null");
                 progressDialog.dismiss();
-                mDataset.clear();
+
 
                 JSONObject jsonObject = null;
                 try {
+                    mDataset.clear();
                     jsonObject = new JSONObject(response);
+                    last_size = jsonObject.getInt("last_page");
 
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
 
@@ -122,11 +144,18 @@ public class Tab1 extends Fragment {
                         announcementModel.setBreak_from(object.getString("break_from"));
                         announcementModel.setBreak_to(object.getString("break_to"));
                         announcementModel.setNo_of_days(object.getString("no_of_days"));
-                        announcementModel.setRemarks(object.getString("remarks"));
+
                         announcementModel.setLeave_status(object.getString("leave_status"));
+
+                        if(session.getUserType().equals("admin")){
+                            announcementModel.setRemarks(object.getString("remarks"));
                         announcementModel.setFirst_name(object.getString("first_name"));
                         announcementModel.setLast_name(object.getString("last_name"));
-
+                        }else {
+                            announcementModel.setRemarks(object.getString("no_of_days"));
+                            announcementModel.setFirst_name(object.getString("remarks"));
+                            announcementModel.setLast_name("");
+                        }
                         mDataset.add(announcementModel);
 
                     }
@@ -135,6 +164,7 @@ public class Tab1 extends Fragment {
 
                 } catch (JSONException e) {
 
+                    Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
 
@@ -180,7 +210,11 @@ public class Tab1 extends Fragment {
             public void onResponse(String response) {
                 Log.e("Response", response + " null");
                 progressDialog.dismiss();
-                GetResult();
+                Tab2 tab2 = new Tab2();
+                tab2.onResume();
+                Tab3 tab3 = new Tab3();
+                tab3.onResume();
+                GetResult(Mpage);
 
 
             }
@@ -209,4 +243,13 @@ public class Tab1 extends Fragment {
     }
 
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // Refresh your fragment here
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+            Log.i("IsRefresh", "Yes");
+        }
+    }
 }

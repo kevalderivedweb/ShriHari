@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.shreehari.API.GetAssignmentRequest;
 import com.example.shreehari.Adapter.AssignmentAdapter;
+import com.example.shreehari.EndlessRecyclerViewScrollListener;
 import com.example.shreehari.Model.AssignmentModel;
 import com.example.shreehari.R;
 import com.example.shreehari.UserSession.UserSession;
@@ -46,6 +47,9 @@ public class Assignment extends Fragment {
 	private RecyclerView recyleview;
 	private AssignmentAdapter mAdapter;
 	private ArrayList<AssignmentModel> mDataset = new ArrayList<>();
+	private LinearLayoutManager linearlayout;
+	private int last_size;
+	private String Mpage = "1";
 
 
 	// Store instance variables based on arguments passed
@@ -75,14 +79,17 @@ public class Assignment extends Fragment {
 
 		if(session.getUserType().equals("admin")){
 			view.findViewById(R.id.add_btn).setVisibility(View.VISIBLE);
+		}else if(session.getUserType().equals("parent")){
+			view.findViewById(R.id.add_btn).setVisibility(View.GONE);
 		}else {
 			view.findViewById(R.id.add_btn).setVisibility(View.GONE);
 		}
 
-
+		mDataset.clear();
 		recyleview = view.findViewById(R.id.recyleview);
 		recyleview.setHasFixedSize(true);
-		recyleview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+		linearlayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+		recyleview.setLayoutManager(linearlayout);
 		mAdapter = new AssignmentAdapter(mDataset, new AssignmentAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(int item) {
@@ -95,8 +102,18 @@ public class Assignment extends Fragment {
 
 			}
 		});
+		recyleview.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayout) {
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				Log.e("PageStatus",page + "  " + last_size);
+				if (page!=last_size){
+					Mpage = String.valueOf(page+1);
+					GetAssignment(Mpage);
+				}
+			}
+		});
 		recyleview.setAdapter(mAdapter);
-		GetAssignment();
+		GetAssignment(Mpage);
 
 		return view;
 	}
@@ -113,7 +130,7 @@ public class Assignment extends Fragment {
 				.commit();
 	}
 
-	private void GetAssignment() {
+	private void GetAssignment(String page) {
 
 
 		final KProgressHUD progressDialog = KProgressHUD.create(getActivity())
@@ -124,18 +141,21 @@ public class Assignment extends Fragment {
 				.setDimAmount(0.5f)
 				.show();
 
-		GetAssignmentRequest loginRequest = new GetAssignmentRequest(new Response.Listener<String>() {
+		GetAssignmentRequest loginRequest = new GetAssignmentRequest(page,new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Log.e("Response", response + " null");
 				progressDialog.dismiss();
-				mDataset.clear();
+
 
 				JSONObject jsonObject = null;
 				try {
 					jsonObject = new JSONObject(response);
 
+					last_size = jsonObject.getInt("last_page");
+
 					JSONArray jsonArray = jsonObject.getJSONArray("data");
+
 
 					for (int i = 0 ; i<jsonArray.length() ; i++){
 						JSONObject object = jsonArray.getJSONObject(i);

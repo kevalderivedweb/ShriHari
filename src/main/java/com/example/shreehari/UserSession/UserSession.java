@@ -107,7 +107,7 @@ public class UserSession {
             , String coaching_student_id
             , String branch_id
             , String parent_id
-            , String APIToken,String coaching_reg_no,String registered_date) {
+            , String APIToken) {
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -118,8 +118,7 @@ public class UserSession {
         editor.putString(KEY_COACH_STUDENT, coaching_student_id);
         editor.putString(KEY_BRANCH, branch_id);
         editor.putString(KEY_PARENT, parent_id);
-        editor.putString(KEY_REGDATE, registered_date);
-        editor.putString(KEY_REGNO, coaching_reg_no);
+
 
         editor.putString(KEY_NAME, first_name);
         editor.putString(KEY_LNAME, last_name);
@@ -276,6 +275,26 @@ public class UserSession {
     public void setFirstTime(Boolean n) {
         editor.putBoolean(FIRST_TIME, n);
         editor.commit();
+    }
+
+    public void setRegistrationNumber(String n) {
+        editor.putString(KEY_REGNO, n);
+        editor.commit();
+    }
+
+    public void setRegistrationDate(String n) {
+        editor.putString(KEY_REGDATE, n);
+        editor.commit();
+    }
+
+
+    public String getRegistrationNumber() {
+        return pref.getString(KEY_REGNO, "");
+    }
+
+
+    public String getRegistrationDate() {
+        return pref.getString(KEY_REGDATE, "");
     }
 
     public void setSelctedUser(String user_id) {

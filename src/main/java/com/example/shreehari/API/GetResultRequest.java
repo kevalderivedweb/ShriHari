@@ -15,8 +15,8 @@ public class GetResultRequest extends StringRequest {
 
     private Map<String, String> parameters;
 
-    public GetResultRequest(String standard_id,String batch_id,Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, ServerUtils.BASE_URL+"get-result-student?standard_id="+standard_id+"&batch_id="+batch_id, listener, null);
+    public GetResultRequest(String page,String standard_id,String batch_id,Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        super(Method.GET, ServerUtils.BASE_URL+"get-result-student?standard_id="+standard_id+"&batch_id="+batch_id+"&page="+page, listener, null);
         parameters = new HashMap<>();
 
     }

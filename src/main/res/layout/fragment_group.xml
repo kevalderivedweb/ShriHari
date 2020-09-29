@@ -25,6 +25,7 @@
             android:weightSum="3">
 
             <ImageView
+                android:id="@+id/close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
@@ -74,6 +75,7 @@
                 android:orientation="horizontal">
 
                 <CheckBox
+                    android:id="@+id/checkbox"
                     android:layout_width="30dp"
                     android:layout_height="20dp"
                     android:layout_marginLeft="7dp"/>
@@ -190,13 +192,17 @@
 
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/batch_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:weightSum="3"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="visible"
             android:background="@drawable/shadow">
 
 
@@ -205,59 +211,73 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/txt_color"
                 android:textStyle="normal"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="0.6"
+                android:layout_weight="1.20"
                 android:layout_gravity="center"
                 android:gravity="center|start"
-                android:layout_marginRight="15dp"
-                android:drawableRight="@drawable/open_botton_2"
+                android:text="Batch :"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
-                android:text="Classes:"
                 android:textSize="14dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textStyle="normal"
-                android:layout_marginTop="12dp"
+                android:layout_weight="0.5"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/rcyleview"/>
+
+            <ImageView
+                android:id="@+id/batch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.35"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="90dp"
-                android:background="@drawable/bg_round_bg_yellow"
-                android:text="   [ILETS]   "
-                android:textSize="5dp"/>
-        </RelativeLayout>
+                android:src="@drawable/open_botton_2"/>
 
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="visible"
             android:background="@drawable/shadow">
 
 
             <TextView
-                android:id="@+id/attechment"
+                android:id="@+id/attechmenttxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/txt_color"
                 android:textStyle="normal"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="0.6"
+                android:layout_weight="0.70"
                 android:layout_gravity="center"
                 android:gravity="center|start"
-                android:layout_marginRight="15dp"
-                android:drawableRight="@drawable/open_botton_2"
+                android:text="Attachment :"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
-                android:text="Attachment:"
                 android:textSize="14dp"/>
-        </LinearLayout>
 
+            <ImageView
+                android:id="@+id/attechment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.1"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center"
+                android:src="@drawable/open_botton_2"/>
+
+        </LinearLayout>
 
 
         <LinearLayout

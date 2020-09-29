@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import com.example.shreehari.Adapter.ExamAdapter;
 import com.example.shreehari.Adapter.ResultAdapter;
 import com.example.shreehari.Adapter.SpinAdapter;
 import com.example.shreehari.Adapter.SpinAdapter2;
+import com.example.shreehari.EndlessRecyclerViewScrollListener;
 import com.example.shreehari.Model.BatchModel;
 import com.example.shreehari.Model.ExamModel;
 import com.example.shreehari.Model.ResultModel;
@@ -61,6 +63,10 @@ public class Exam extends Fragment {
 	private static ArrayList<StandardModel> mDataset2 = new ArrayList<>();
 	private int standard_pos= 0;
 	private int batch_pos= 0;
+	private LinearLayoutManager linearlayout;
+	private int last_size;
+	private String Mpage = "1";
+	private LinearLayout spinnerlayout;
 
 
 	// Store instance variables based on arguments passed
@@ -81,9 +87,11 @@ public class Exam extends Fragment {
 		session = new UserSession(getActivity());
 		standard = view.findViewById(R.id.standard);
 		batch = view.findViewById(R.id.batch);
+		spinnerlayout = view.findViewById(R.id.spinnerlayout);
 		recyleview = view.findViewById(R.id.recyleview);
 		recyleview.setHasFixedSize(true);
-		recyleview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+		linearlayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+		recyleview.setLayoutManager(linearlayout);
 		mAdapter = new ExamAdapter(mDataset, new ExamAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(int item) {
@@ -92,15 +100,29 @@ public class Exam extends Fragment {
 		});
 		recyleview.setAdapter(mAdapter);
 
+		recyleview.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayout) {
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				Log.e("PageStatus",page + "  " + last_size);
+				if (page!=last_size){
+					Mpage = String.valueOf(page+1);
+					GetResult(Mpage,mDataset2.get(standard_pos).getCoaching_id(),mDataset1.get(batch_pos).getBatch_id());
+				}
+			}
+		});
+
+
 		standard.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 				standard_pos = i;
 
 				try {
-					GetResult(mDataset2.get(standard_pos).getCoaching_id(),mDataset1.get(batch_pos).getBatch_id());
+					mDataset.clear();
+					Mpage = "1";
+					GetResult(Mpage,mDataset2.get(standard_pos).getCoaching_id(),mDataset1.get(batch_pos).getBatch_id());
 				}catch (Exception e){
-					GetResult("0","0");
+					GetResult(Mpage,"0","0");
 				}
 			}
 
@@ -109,17 +131,19 @@ public class Exam extends Fragment {
 
 			}
 		});
-
+		mDataset.clear();
 		batch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 				batch_pos = i;
 
 				try {
-					GetResult(mDataset2.get(standard_pos).getCoaching_id(),mDataset1.get(batch_pos).getBatch_id());
+					mDataset.clear();
+					Mpage = "1";
+					GetResult(Mpage,mDataset2.get(standard_pos).getCoaching_id(),mDataset1.get(batch_pos).getBatch_id());
 
 				}catch (Exception e){
-					GetResult("0","0");
+					GetResult(Mpage,"0","0");
 
 				}
 			}
@@ -141,11 +165,19 @@ public class Exam extends Fragment {
 
 		if(session.getUserType().equals("admin")){
 			view.findViewById(R.id.add_btn).setVisibility(View.VISIBLE);
+		}else if(session.getUserType().equals("parent")){
+			view.findViewById(R.id.add_btn).setVisibility(View.GONE);
 		}else {
 			view.findViewById(R.id.add_btn).setVisibility(View.GONE);
 		}
-		GetstandardAndBatch();
 
+
+		if(session.getUserType().equals("admin")){
+			spinnerlayout.setVisibility(View.VISIBLE);
+			GetstandardAndBatch();
+		}else {
+			GetResult(Mpage,"0","0");
+		}
 		return view;
 	}
 
@@ -160,7 +192,7 @@ public class Exam extends Fragment {
 				.commit();
 	}
 
-	private void GetResult(String standard_id,String batch_id) {
+	private void GetResult(String page,String standard_id,String batch_id) {
 
 
 		final KProgressHUD progressDialog = KProgressHUD.create(getActivity())
@@ -171,16 +203,17 @@ public class Exam extends Fragment {
 				.setDimAmount(0.5f)
 				.show();
 
-		GetExamRequest loginRequest = new GetExamRequest(standard_id,batch_id,new Response.Listener<String>() {
+		GetExamRequest loginRequest = new GetExamRequest(page,standard_id,batch_id,new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Log.e("Response", response + " null");
 				progressDialog.dismiss();
-				mDataset.clear();
+
 
 				JSONObject jsonObject = null;
 				try {
 					jsonObject = new JSONObject(response);
+					last_size = jsonObject.getInt("last_page");
 
 					JSONArray jsonArray = jsonObject.getJSONArray("data");
 

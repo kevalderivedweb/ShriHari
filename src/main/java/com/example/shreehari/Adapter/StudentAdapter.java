@@ -14,11 +14,19 @@ import com.example.shreehari.Model.StudentModel;
 import com.example.shreehari.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHolder> {
 
     private final OnItemClickListener listener;
     private ArrayList<StudentModel> mDataset;
+
+
+    public void filterList(ArrayList<StudentModel> filterdNames) {
+        mDataset = filterdNames;
+        notifyDataSetChanged();
+    }
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and

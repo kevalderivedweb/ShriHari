@@ -21,7 +21,6 @@ public class GetAnnouncementDetailsRequest extends StringRequest {
 
     }
 
-
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
         return parameters;

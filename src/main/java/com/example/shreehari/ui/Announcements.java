@@ -2,6 +2,7 @@ package com.example.shreehari.ui;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -35,14 +36,20 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.example.shreehari.API.GetAnnouncementRequest;
 import com.example.shreehari.API.GetAnnouncementRequestFilter;
 import com.example.shreehari.Adapter.AnnouncementAdapter;
 import com.example.shreehari.Adapter.SpinAdapter5;
 import com.example.shreehari.EndlessRecyclerViewScrollListener;
+import com.example.shreehari.HomeActivity;
 import com.example.shreehari.Model.AnnouncementModel;
 import com.example.shreehari.Model.TypeModel;
 import com.example.shreehari.R;
+import com.example.shreehari.SetMPin_Activity;
 import com.example.shreehari.UserSession.UserSession;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -75,9 +82,11 @@ public class Announcements extends Fragment {
 	private int last_size;
 	private LinearLayoutManager linearlayout;
     private String Mpage = "1";
+	private boolean mFilter = false;
+	private ImageView refresh;
 
 
-    // Store instance variables based on arguments passed
+	// Store instance variables based on arguments passed
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -100,6 +109,8 @@ public class Announcements extends Fragment {
 				showPopup();
 			}
 		});
+		Mpage = "1";
+		Log.e("Mpage",Mpage);
 		recyleview = view.findViewById(R.id.recyleview);
 		recyleview.setHasFixedSize(true);
 		linearlayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
@@ -120,6 +131,7 @@ public class Announcements extends Fragment {
 
 		mview = view.findViewById(R.id.view);
 		madd = view.findViewById(R.id.add);
+		refresh = view.findViewById(R.id.refresh);
 		mDataset.clear();
 		recyleview.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayout) {
 			@Override
@@ -127,13 +139,18 @@ public class Announcements extends Fragment {
 				Log.e("PageStatus",page + "  " + last_size);
 				if (page!=last_size){
 					Mpage = String.valueOf(page+1);
-					GetAnnouncement(Mpage);
+					if(!mFilter){
+						GetAnnouncement(Mpage);
+					}
+
 				}
 			}
 		});
 
 		if(session.getUserType().equals("admin")){
 			view.findViewById(R.id.add).setVisibility(View.VISIBLE);
+		}else if(session.getUserType().equals("parent")){
+			view.findViewById(R.id.add).setVisibility(View.GONE);
 		}else {
 			view.findViewById(R.id.add).setVisibility(View.GONE);
 		}
@@ -171,8 +188,33 @@ public class Announcements extends Fragment {
 			}
 		});
 
+		refresh.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mDataset.clear();
+				Mpage = "1";
+				GetAnnouncement(Mpage);
+			}
+		});
 
+		AndroidNetworking.get("http://teqcoder.com/shreeharicrm/api/api/get-announcement?page=1")
+				.addHeaders("Authorization", "Bearer "+ session.getAPIToken())
+				.setTag("test")
+				.setPriority(Priority.LOW)
+				.build()
+				.getAsString(new StringRequestListener() {
+					@Override
+					public void onResponse(String response) {
 
+						Log.e("Response",response);
+
+					}
+
+					@Override
+					public void onError(ANError anError) {
+						Log.e("Response",anError.getErrorBody());
+					}
+				});
 		GetAnnouncement(Mpage);
 		return view;
 	}
@@ -272,9 +314,17 @@ public class Announcements extends Fragment {
 		start_date = dialog.findViewById(R.id.start_date);
 		due_date = dialog.findViewById(R.id.due_date);
 		TextView done = dialog.findViewById(R.id.done);
+		TextView cancel = dialog.findViewById(R.id.cancel);
 		ImageView clear_end = dialog.findViewById(R.id.clear_end);
 		ImageView clear_start = dialog.findViewById(R.id.clear_start);
 
+
+		cancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				dialog.dismiss();
+			}
+		});
 		clear_end.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -291,14 +341,15 @@ clear_start.setOnClickListener(new View.OnClickListener() {
 		done.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				dialog.dismiss();
-				if(type_pos==0) {
-					Toast.makeText(getActivity(),"Please select user",Toast.LENGTH_SHORT).show();
-				}else if(start_date.getText().toString().equals("   Select Start Date:")){
+
+				 if(start_date.getText().toString().equals("   Select Start Date:")){
 					Toast.makeText(getActivity(),"Please select start date",Toast.LENGTH_SHORT).show();
 				}else if(due_date.getText().toString().equals("   Select End Date:")){
 					Toast.makeText(getActivity(),"Please select End  Date",Toast.LENGTH_SHORT).show();
-				}else {
+				}else if(type_pos==mDataset2.size()-1){
+					 Toast.makeText(getActivity(),"Please select User",Toast.LENGTH_SHORT).show();
+				 }else {
+					 dialog.dismiss();
 					GetAnnouncement2(mDataset2.get(type_pos).getTitle(),start_date.getText().toString(),due_date.getText().toString());
 
 				}
@@ -317,6 +368,10 @@ clear_start.setOnClickListener(new View.OnClickListener() {
 		due_date.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				if(start_date.getText().toString().equals("   Select Start Date:")){
+					Toast.makeText(getActivity(),"Please select Start date...",Toast.LENGTH_SHORT).show();
+					return;
+				}
 				DialogFragment newFragment1 = new DatePickerFragment1();
 				newFragment1.show(getActivity().getSupportFragmentManager(), "datePicker");
 
@@ -337,14 +392,14 @@ clear_start.setOnClickListener(new View.OnClickListener() {
 
 		mDataset2.clear();
 
+		TypeModel typeModel2 = new TypeModel();
+		typeModel2.setTitle("Student");
+		mDataset2.add(typeModel2);
 
 		TypeModel typeModel1 = new TypeModel();
 		typeModel1.setTitle("Parent");
 		mDataset2.add(typeModel1);
 
-		TypeModel typeModel2 = new TypeModel();
-		typeModel2.setTitle("Student");
-		mDataset2.add(typeModel2);
 
 		TypeModel typeModel = new TypeModel();
 		typeModel.setTitle("Please select user");
@@ -354,6 +409,7 @@ clear_start.setOnClickListener(new View.OnClickListener() {
 				android.R.layout.simple_spinner_item,
 				mDataset2);
 		type.setAdapter(adapter);
+		adapter.setDropDownViewResource(R.layout.spinner_item);
 		type.setSelection(adapter.getCount());
 		dialog.show();
 
@@ -372,7 +428,7 @@ clear_start.setOnClickListener(new View.OnClickListener() {
 			int month = c.get(Calendar.MONTH);
 			int day = c.get(Calendar.DAY_OF_MONTH);
 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
-			dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+			//dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
 			return  dialog;
 		}
 
@@ -381,17 +437,6 @@ clear_start.setOnClickListener(new View.OnClickListener() {
 			calendar.set(year, month, day);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String dateString = dateFormat.format(calendar.getTime());
-			try {
-
-				if(!due_date.getText().toString().equals("   Select End Date:")){
-				if(dateFormat.parse(due_date.getText().toString()).before(dateFormat.parse(dateString))) {
-					Toast.makeText(getActivity(),"Please select correct date",Toast.LENGTH_SHORT).show();
-					return;
-				}
-				}
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
 			start_date.setText("  "+dateString);
 		}
 	}
@@ -409,7 +454,14 @@ clear_start.setOnClickListener(new View.OnClickListener() {
 			int month = c.get(Calendar.MONTH);
 			int day = c.get(Calendar.DAY_OF_MONTH);
 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
-			dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			try {
+				Date datetostring = dateFormat.parse(start_date.getText().toString());
+				dialog.getDatePicker().setMinDate(datetostring.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			//dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
 			return  dialog;
 		}
 
@@ -418,7 +470,7 @@ clear_start.setOnClickListener(new View.OnClickListener() {
 			calendar.set(year, month, day);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String dateString = dateFormat.format(calendar.getTime());
-			try {
+			/*try {
 				if(!start_date.getText().toString().equals("   Select Start Date:")) {
 					if (dateFormat.parse(start_date.getText().toString()).after(dateFormat.parse(dateString))) {
 						Toast.makeText(getActivity(), "Please select correct date", Toast.LENGTH_SHORT).show();
@@ -427,14 +479,15 @@ clear_start.setOnClickListener(new View.OnClickListener() {
 				}
 			} catch (ParseException e) {
 				e.printStackTrace();
-			}
+			}*/
 			due_date.setText("  "+dateString);
 		}
 	}
 
 	private void GetAnnouncement2(String type,String start_date,String end_date) {
 
-
+		mDataset.clear();
+		mAdapter.notifyDataSetChanged();
 		final KProgressHUD progressDialog = KProgressHUD.create(getActivity())
 				.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
 				.setLabel("Please wait")
@@ -446,9 +499,10 @@ clear_start.setOnClickListener(new View.OnClickListener() {
 		GetAnnouncementRequestFilter loginRequest = new GetAnnouncementRequestFilter(type,start_date,end_date,new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				Log.e("Response", response + " null");
+				Log.e("ResponseFilter", response + " null");
 				progressDialog.dismiss();
 				mDataset.clear();
+				mFilter = true;
 				JSONObject jsonObject = null;
 				try {
 					jsonObject = new JSONObject(response);

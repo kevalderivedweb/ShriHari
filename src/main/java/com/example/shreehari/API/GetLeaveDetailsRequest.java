@@ -15,8 +15,8 @@ public class GetLeaveDetailsRequest extends StringRequest {
 
     private Map<String, String> parameters;
 
-    public GetLeaveDetailsRequest(String id, Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, ServerUtils.BASE_URL+"get-leave?leave_status_id="+id, listener, null);
+    public GetLeaveDetailsRequest(String page,String id, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        super(Method.GET, ServerUtils.BASE_URL+"get-leave?leave_status_id="+id+"&page="+page, listener, null);
         parameters = new HashMap<>();
 
     }

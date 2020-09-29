@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,12 +77,12 @@ public class Attendance extends Fragment {
 	// Store instance variables
 	private String title;
 	private int page;
-	private UserSession session;
-	private RequestQueue requestQueue;
+	private static UserSession session;
+	private static RequestQueue requestQueue;
 	private RecyclerView recyleview;
-	private ArrayList<AttandanceModel> mDataset = new ArrayList<>();
-	private ArrayList<AttandanceModel> mDataset_new = new ArrayList<>();
-	private AttandanceAdapter mAdapter;
+	private static ArrayList<AttandanceModel> mDataset = new ArrayList<>();
+	private static ArrayList<AttandanceModel> mDataset_new = new ArrayList<>();
+	private static AttandanceAdapter mAdapter;
 	private Spinner standard,batch;
 	private static ArrayList<BatchModel> mDataset1 = new ArrayList<>();
 	private static ArrayList<StandardModel> mDataset2 = new ArrayList<>();
@@ -92,9 +93,12 @@ public class Attendance extends Fragment {
 	private ImageView minus,plus;
 	private static String formattedDate;
 	private ImageView done;
-	private TextView green,red,white;
-	private ImageView selector;
-	private boolean selector_bol;
+	private static TextView green;
+	private static TextView red;
+	private static TextView white;
+	private static ImageView selector;
+	private static boolean selector_bol;
+	private static FragmentActivity mContext;
 
 
 	// Store instance variables based on arguments passed
@@ -128,12 +132,17 @@ public class Attendance extends Fragment {
 		if(session.getUserType().equals("admin")){
 			view.findViewById(R.id.done).setVisibility(View.VISIBLE);
 			view.findViewById(R.id.selector).setVisibility(View.VISIBLE);
+		}else if(session.getUserType().equals("parent")){
+			view.findViewById(R.id.done).setVisibility(View.GONE);
+			view.findViewById(R.id.selector).setVisibility(View.GONE);
 		}else {
-			view.findViewById(R.id.done).setVisibility(View.VISIBLE);
-			view.findViewById(R.id.selector).setVisibility(View.VISIBLE);
+			view.findViewById(R.id.done).setVisibility(View.GONE);
+			view.findViewById(R.id.selector).setVisibility(View.GONE);
 		}
+		mDataset.clear();
+		mDataset_new.clear();
 
-
+		mContext = getActivity();
 
 		recyleview = view.findViewById(R.id.recyleview);
 		recyleview.setHasFixedSize(true);
@@ -141,6 +150,13 @@ public class Attendance extends Fragment {
 		mAdapter = new AttandanceAdapter(mDataset, new AttandanceAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(int item) {
+
+				for (int j = 0 ; j < stringArrayList.size() ; j++){
+					if(stringArrayList.get(j).equals(mDataset.get(item).getId())){
+						stringArrayList.remove(mDataset.get(item).getId());
+						return;
+					}
+				}
 				stringArrayList.add(mDataset.get(item).getId());
 			}
 		});
@@ -286,7 +302,22 @@ public class Attendance extends Fragment {
 			@Override
 			public void onClick(View view) {
 				//AddAttandance(formattedDate,stringArrayList);
-				new UploadFileToServer().execute();
+
+
+
+
+
+				if(batch_pos==mDataset1.size()-1){
+					Toast.makeText(getActivity(), "Please Select Batch & Standard", Toast.LENGTH_SHORT).show();
+				}else if(standard_pos==mDataset2.size()-1){
+					Toast.makeText(getActivity(), "Please Select Standard & Standard", Toast.LENGTH_SHORT).show();
+				}else if(stringArrayList.isEmpty()){
+					Toast.makeText(getActivity(), "Please Fill Sheet", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					new UploadFileToServer().execute();
+				}
+
 			}
 		});
 		GetstandardAndBatch();
@@ -296,11 +327,11 @@ public class Attendance extends Fragment {
 	}
 
 
-	private void GetAttandance(String date, String batch, String standard) {
+	private static void GetAttandance(String date, String batch, String standard) {
 
 		Log.e("Response", date + " ----");
 
-		final KProgressHUD progressDialog = KProgressHUD.create(getActivity())
+		final KProgressHUD progressDialog = KProgressHUD.create(mContext)
 				.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
 				.setLabel("Please wait")
 				.setCancellable(false)
@@ -345,11 +376,11 @@ public class Attendance extends Fragment {
 					for(int i = 0 ; i<mDataset.size();i++){
 						if(mDataset.get(i).getIs_absent().equals("1")){
 							selector_bol= true;
-							selector.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.close));
+							selector.setImageDrawable(mContext.getResources().getDrawable(R.drawable.close));
 							return;
 						}else {
 							selector_bol= false;
-							selector.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_right));
+							selector.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_right));
 						}
 					}
 
@@ -365,16 +396,16 @@ public class Attendance extends Fragment {
 				error.printStackTrace();
 				progressDialog.dismiss();
 				if (error instanceof ServerError)
-					Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, "Server Error", Toast.LENGTH_SHORT).show();
 				else if (error instanceof TimeoutError)
-					Toast.makeText(getActivity(), "Connection Timed Out", Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, "Connection Timed Out", Toast.LENGTH_SHORT).show();
 				else if (error instanceof NetworkError)
-					Toast.makeText(getActivity(), "Bad Network Connection", Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, "Bad Network Connection", Toast.LENGTH_SHORT).show();
 			}
 		}){@Override
 		public Map<String, String> getHeaders() throws AuthFailureError {
 			Map<String, String> params = new HashMap<String, String>();
-			// params.put("Accept", "application/json");
+			params.put("Accept", "application/json");
 			params.put("Authorization","Bearer "+ session.getAPIToken());
 			return params;
 		}};
@@ -425,7 +456,7 @@ public class Attendance extends Fragment {
 		}){@Override
 		public Map<String, String> getHeaders() throws AuthFailureError {
 			Map<String, String> params = new HashMap<String, String>();
-			// params.put("Accept", "application/json");
+			params.put("Accept", "application/json");
 			params.put("Authorization","Bearer "+ session.getAPIToken());
 			return params;
 		}};
@@ -496,7 +527,7 @@ public class Attendance extends Fragment {
 		}){@Override
 		public Map<String, String> getHeaders() throws AuthFailureError {
 			Map<String, String> params = new HashMap<String, String>();
-			// params.put("Accept", "application/json");
+			 params.put("Accept", "application/json");
 			params.put("Authorization","Bearer "+ session.getAPIToken());
 			return params;
 		}};
@@ -556,7 +587,7 @@ public class Attendance extends Fragment {
 		}){@Override
 		public Map<String, String> getHeaders() throws AuthFailureError {
 			Map<String, String> params = new HashMap<String, String>();
-			// params.put("Accept", "application/json");
+			params.put("Accept", "application/json");
 			params.put("Authorization","Bearer "+ session.getAPIToken());
 			return params;
 		}};
@@ -593,9 +624,12 @@ public class Attendance extends Fragment {
 			String dateString = dateFormat.format(calendar.getTime());
 			date.setText(dateString);
 			formattedDate = dateString;
+			GetAttandance(formattedDate,mDataset1.get(batch_pos).getBatch_id(),mDataset2.get(standard_pos).getCoaching_id());
+
 
 		}
 	}
+
 
 	private class UploadFileToServer extends AsyncTask<Void, Integer, String> {
 		private static final String FILE_UPLOAD_URL = "http://teqcoder.com/shreeharicrm/api/api/add-attendance";
@@ -649,6 +683,8 @@ public class Attendance extends Fragment {
 				}
 
 				httppost.setEntity(entity);
+				httppost.addHeader("Accept", "application/json");
+
 				httppost.addHeader("Authorization","Bearer "+userSession.getAPIToken());
 				// Making server call
 				HttpResponse response = httpclient.execute(httppost);
@@ -659,8 +695,7 @@ public class Attendance extends Fragment {
 					// Server response
 					responseString = EntityUtils.toString(r_entity);
 				} else {
-					responseString = "Error occurred! Http Status Code: "
-							+ statusCode;
+					responseString = "Error occurred! Http Status Code: " + statusCode;
 				}
 
 			} catch (ClientProtocolException e) {
@@ -683,6 +718,7 @@ public class Attendance extends Fragment {
 				JSONObject jsonObject = new JSONObject(result);
 
 				if (jsonObject.getInt("ResponseCode")==200) {
+					stringArrayList.clear();
 					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 					builder.setMessage("Updated Successfully!")
 							.setCancelable(false)

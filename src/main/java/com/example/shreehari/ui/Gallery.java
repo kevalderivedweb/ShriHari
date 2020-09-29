@@ -1,6 +1,7 @@
 package com.example.shreehari.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,10 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.example.shreehari.API.GetGallaryRequest;
 import com.example.shreehari.Adapter.GallaryAdapter;
 import com.example.shreehari.EndlessRecyclerViewScrollListener;
@@ -81,6 +86,7 @@ public class Gallery extends Fragment {
 				GalleryDetails fragobj = new GalleryDetails();
 				Bundle bundle = new Bundle();
 				bundle.putString("Id", mDataset.get(item).getMobile_gallery_category_id());
+				bundle.putString("CategoryName", mDataset.get(item).getCategory_name());
 				fragobj.setArguments(bundle);
 				replaceFragment(R.id.nav_host_fragment,fragobj,"Fragment",null);
 
@@ -97,14 +103,70 @@ public class Gallery extends Fragment {
 			public void onLoadMore(int page, int totalItemsCount) {
 				if (page!=last_size){
 					 Mpage = String.valueOf(page+1);
-					GetResult(Mpage);
+					GetImages(Mpage);
 				}
 			}
 		});
 
 
-		GetResult(Mpage);
+		GetImages(Mpage);
 		return view;
+	}
+
+	private void GetImages(String mpage){
+		final KProgressHUD progressDialog = KProgressHUD.create(getActivity())
+				.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+				.setLabel("Please wait")
+				.setCancellable(false)
+				.setAnimationSpeed(2)
+				.setDimAmount(0.5f)
+				.show();
+		AndroidNetworking.get("http://teqcoder.com/shreeharicrm/api/api/get-gallery-category?page="+mpage)
+				.addHeaders("Authorization", "Bearer "+ session.getAPIToken())
+				.setTag("test")
+				.setPriority(Priority.LOW)
+				.build()
+				.getAsString(new StringRequestListener() {
+					@Override
+					public void onResponse(String response) {
+						progressDialog.dismiss();
+						Log.e("Response",response);
+
+						JSONObject jsonObject = null;
+						try {
+							jsonObject = new JSONObject(response);
+
+							JSONObject jsonObject1 = jsonObject.getJSONObject("data");
+							last_size = jsonObject1.getInt("last_page");
+							JSONArray jsonArray = jsonObject1.getJSONArray("data");
+
+							for (int i = 0 ; i<jsonArray.length() ; i++){
+								JSONObject object = jsonArray.getJSONObject(i);
+								GallaryModel announcementModel = new GallaryModel();
+								announcementModel.setMobile_gallery_category_id(String.valueOf(object.getInt("mobile_gallery_category_id")));
+								announcementModel.setCategory_name(object.getString("category_name"));
+								announcementModel.setCategory_image(object.getString("category_image"));
+								announcementModel.setSelection("No");
+
+								mDataset.add(announcementModel);
+
+							}
+
+							mAdapter.notifyDataSetChanged();
+
+						} catch (JSONException e) {
+
+							e.printStackTrace();
+						}
+					}
+
+					@Override
+					public void onError(ANError anError) {
+						progressDialog.dismiss();
+						Log.e("Response",anError.getErrorBody());
+					}
+				});
+
 	}
 
 	private void GetResult(String mpage) {
@@ -168,7 +230,7 @@ public class Gallery extends Fragment {
 		}){@Override
 		public Map<String, String> getHeaders() throws AuthFailureError {
 			Map<String, String> params = new HashMap<String, String>();
-			// params.put("Accept", "application/json");
+			params.put("Accept", "application/json");
 			params.put("Authorization","Bearer "+ session.getAPIToken());
 			return params;
 		}};

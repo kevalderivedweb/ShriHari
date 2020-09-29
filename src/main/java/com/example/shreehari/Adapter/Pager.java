@@ -12,12 +12,20 @@ public class Pager extends FragmentStatePagerAdapter {
     
     //integer to count number of tabs
     int tabCount;
- 
+    // tab titles
+    private String[] tabTitles = new String[]{"Pending", "Approve", "Rejected"};
     //Constructor to the class 
     public Pager(FragmentManager fm, int tabCount) {
         super(fm);
         //Initializing tab count
         this.tabCount= tabCount;
+    }
+
+
+    // overriding getPageTitle()
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return tabTitles[position];
     }
  
     //Overriding method getItem

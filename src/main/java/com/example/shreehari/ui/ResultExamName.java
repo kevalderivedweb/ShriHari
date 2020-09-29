@@ -31,6 +31,7 @@ import com.example.shreehari.API.GetStandardRequest;
 import com.example.shreehari.Adapter.ExamAdapter;
 import com.example.shreehari.Adapter.SpinAdapter;
 import com.example.shreehari.Adapter.SpinAdapter2;
+import com.example.shreehari.EndlessRecyclerViewScrollListener;
 import com.example.shreehari.Model.BatchModel;
 import com.example.shreehari.Model.ExamModel;
 import com.example.shreehari.R;
@@ -56,7 +57,9 @@ public class ResultExamName extends Fragment {
 	private RecyclerView recyleview;
 	private ExamAdapter mAdapter;
 	private String Id;
-
+	private LinearLayoutManager linearlayout;
+	private int last_size;
+	private String Mpage = "1";
 
 	// Store instance variables based on arguments passed
 	@Override
@@ -74,7 +77,7 @@ public class ResultExamName extends Fragment {
 		requestQueue = Volley.newRequestQueue(getActivity());//Creating the RequestQueue
 
 		session = new UserSession(getActivity());
-
+		mDataset.clear();
 		try {
 			Id = getArguments().getString("Id");
 
@@ -86,7 +89,8 @@ public class ResultExamName extends Fragment {
 
 		recyleview = view.findViewById(R.id.recyleview);
 		recyleview.setHasFixedSize(true);
-		recyleview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+		linearlayout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+		recyleview.setLayoutManager(linearlayout);
 		mAdapter = new ExamAdapter(mDataset, new ExamAdapter.OnItemClickListener() {
 			@Override
 			public void onItemClick(int item) {
@@ -101,9 +105,18 @@ public class ResultExamName extends Fragment {
 			}
 		});
 		recyleview.setAdapter(mAdapter);
+		recyleview.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayout) {
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				Log.e("PageStatus",page + "  " + last_size);
+				if (page!=last_size){
+					Mpage = String.valueOf(page+1);
+					GetResult(Mpage,Id);
+				}
+			}
+		});
 
-
-		GetResult(Id);
+		GetResult(Mpage,Id);
 		return view;
 	}
 
@@ -118,7 +131,7 @@ public class ResultExamName extends Fragment {
 				.commit();
 	}
 
-	private void GetResult(String id) {
+	private void GetResult(String page,String id) {
 
 
 		final KProgressHUD progressDialog = KProgressHUD.create(getActivity())
@@ -129,17 +142,17 @@ public class ResultExamName extends Fragment {
 				.setDimAmount(0.5f)
 				.show();
 
-		GetExamNameRequest loginRequest = new GetExamNameRequest(id,new Response.Listener<String>() {
+		GetExamNameRequest loginRequest = new GetExamNameRequest(page,id,new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
 				Log.e("Response", response + " null");
 				progressDialog.dismiss();
-				mDataset.clear();
+
 
 				JSONObject jsonObject = null;
 				try {
 					jsonObject = new JSONObject(response);
-
+					last_size = jsonObject.getInt("last_page");
 					JSONArray jsonArray = jsonObject.getJSONArray("data");
 
 					for (int i = 0 ; i<jsonArray.length() ; i++){

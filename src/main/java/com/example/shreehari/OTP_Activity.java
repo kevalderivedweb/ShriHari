@@ -46,7 +46,6 @@ public class OTP_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_otp);
 
         requestQueue = Volley.newRequestQueue(OTP_Activity.this);//Creating the RequestQueue
@@ -192,6 +191,11 @@ public class OTP_Activity extends AppCompatActivity {
                     overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 
                 } catch (JSONException e) {
+                    try {
+                        Toast.makeText(OTP_Activity.this,jsonObject.getString("ResponseMsg"),Toast.LENGTH_SHORT).show();
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
                     e.printStackTrace();
                 }
 

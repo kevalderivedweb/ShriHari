@@ -1,5 +1,6 @@
 package com.example.shreehari.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ public class Leave extends Fragment implements TabLayout.OnTabSelectedListener {
 	//This is our viewPager
 	private ViewPager viewPager;
 
+	public static Context Leavecontext;
 	// Store instance variables based on arguments passed
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class Leave extends Fragment implements TabLayout.OnTabSelectedListener {
 							 Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_leave, container, false);
 
-
+		Leavecontext = getContext();
 		view.findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -49,6 +51,8 @@ public class Leave extends Fragment implements TabLayout.OnTabSelectedListener {
 
 		UserSession userSession = new UserSession(getContext());
 		if(userSession.getUserType().equals("admin")){
+			view.findViewById(R.id.add_btn).setVisibility(View.GONE);
+		}else if(userSession.getUserType().equals("parent")){
 			view.findViewById(R.id.add_btn).setVisibility(View.GONE);
 		}else {
 			view.findViewById(R.id.add_btn).setVisibility(View.VISIBLE);
@@ -72,8 +76,9 @@ public class Leave extends Fragment implements TabLayout.OnTabSelectedListener {
 
 		//Adding adapter to pager
 		viewPager.setAdapter(adapter);
-
+		//tabLayout.setupWithViewPager(viewPager);
 		//Adding onTabSelectedListener to swipe views
+
 		viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -83,6 +88,7 @@ public class Leave extends Fragment implements TabLayout.OnTabSelectedListener {
 			@Override
 			public void onPageSelected(int position) {
 				tabLayout.selectTab(tabLayout.getTabAt(position));
+
 			}
 
 			@Override
@@ -90,6 +96,9 @@ public class Leave extends Fragment implements TabLayout.OnTabSelectedListener {
 
 			}
 		});
+
+		tabLayout.setupWithViewPager(viewPager);
+
 
 
 		return view;

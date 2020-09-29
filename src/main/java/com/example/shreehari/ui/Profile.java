@@ -1,6 +1,8 @@
 package com.example.shreehari.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +45,7 @@ public class Profile extends Fragment {
 	private String Profile_Id;
 	private RequestQueue requestQueue;
 	private UserSession session;
+	private TextView phone_no;
 
 
 	// Store instance variables based on arguments passed
@@ -66,7 +69,19 @@ public class Profile extends Fragment {
 			Profile_Id = session.getUserId();
 		}
 
+		view.findViewById(R.id.no).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				FunctionCall(phone_no.getText().toString());
+			}
+		});
 
+		view.findViewById(R.id.phone_no).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				FunctionCall(phone_no.getText().toString());
+			}
+		});
 		requestQueue = Volley.newRequestQueue(getActivity());//Creating the RequestQueue
 
 
@@ -74,6 +89,14 @@ public class Profile extends Fragment {
 		return view;
 	}
 
+
+
+	private void FunctionCall(String number){
+		Intent intentCallForward = new Intent(Intent.ACTION_DIAL); // ACTION_CALL
+		Uri uri2 = Uri.fromParts("tel", number, "#");
+		intentCallForward.setData(uri2);
+		startActivity(intentCallForward);
+	}
 
 	private void GetAnnouncementDetails(String id,View view) {
 
@@ -109,7 +132,7 @@ public class Profile extends Fragment {
 					TextView gender = view.findViewById(R.id.gender);
 					TextView status = view.findViewById(R.id.status);
 					TextView name = view.findViewById(R.id.name);
-					TextView phone_no = view.findViewById(R.id.phone_no);
+					phone_no = view.findViewById(R.id.phone_no);
 					TextView main_name = view.findViewById(R.id.main_name);
 					standard.setText(jsonObject1.getString("standard"));
 					coach_no.setText(jsonObject1.getString("coaching_reg_no"));

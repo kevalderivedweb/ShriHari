@@ -586,6 +586,7 @@ android:weightSum="3">
             android:background="@color/white"/>
     <LinearLayout
         android:id="@+id/ln_profile"
+        android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="50dp"
           android:layout_gravity="center"
@@ -620,8 +621,10 @@ android:weightSum="3">
 
 
         <View
+            android:id="@+id/ln_profile_view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:visibility="visible"
             android:background="@color/white"/>
 
         <LinearLayout
@@ -663,6 +666,7 @@ android:weightSum="3">
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:visibility="gone"
             android:background="@color/white"/>
         <LinearLayout
             android:id="@+id/ln_student"
@@ -700,6 +704,7 @@ android:weightSum="3">
 
 
         <View
+            android:id="@+id/ln_student_view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/white"/>
@@ -739,10 +744,92 @@ android:weightSum="3">
                 android:layout_weight="1.25"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/ln_setting"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:weightSum="3">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_name"
+                android:layout_weight="1.25"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Setting"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:src="@drawable/arrow_white"
+                android:layout_weight="1.25"/>
+
+
+
+        </LinearLayout>
+        <View
+            android:id="@+id/ln_setting_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="visible"
+            android:background="@color/white"/>
+
+        <LinearLayout
+            android:id="@+id/ln_logout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:weightSum="3">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_name"
+                android:layout_weight="1.25"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Logout"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:src="@drawable/arrow_white"
+                android:layout_weight="1.25"/>
+        </LinearLayout>
+
+
+
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:visibility="gone"
             android:background="@color/white"/>
 
 

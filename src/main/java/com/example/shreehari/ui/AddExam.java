@@ -31,6 +31,10 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.example.shreehari.API.AddExamRequest;
 import com.example.shreehari.API.GetBatchRequest;
 import com.example.shreehari.API.GetExamRequest;
@@ -172,14 +176,14 @@ public class AddExam extends Fragment {
 					Toast.makeText(getActivity(),"Please Enter Topic",Toast.LENGTH_SHORT).show();
 				}else if(essay.getText().toString().isEmpty()){
 					Toast.makeText(getActivity(),"Please Enter Essay",Toast.LENGTH_SHORT).show();
-				}else if(standard_pos==0){
-					Toast.makeText(getActivity(),"Please Enter Standard",Toast.LENGTH_SHORT).show();
-				}else if(batch_pos==0){
-					Toast.makeText(getActivity(),"Please Enter Batch",Toast.LENGTH_SHORT).show();
 				}else if((date.getText().toString().equals("   Select  Date:"))){
 					Toast.makeText(getActivity(),"Please Select Date",Toast.LENGTH_SHORT).show();
 				}else if((time.getText().toString().equals("   Select Time :"))){
 					Toast.makeText(getActivity(),"Please Select Time",Toast.LENGTH_SHORT).show();
+				}else if(standard_pos==mDataset2.size()-1){
+					Toast.makeText(getActivity(),"Please Select Standard",Toast.LENGTH_SHORT).show();
+				}else if(batch_pos==mDataset1.size()-1){
+					Toast.makeText(getActivity(),"Please Select Batch",Toast.LENGTH_SHORT).show();
 				}else {
 					AddExam(mock_test_name.getText().toString(),date.getText().toString(),time.getText().toString(),topic.getText().toString(),essay.getText().toString(),session.getBranchId(),mDataset2.get(standard_pos).getCoaching_id(),mDataset1.get(batch_pos).getBatch_id());
 				}
@@ -204,15 +208,6 @@ public class AddExam extends Fragment {
 					JSONArray jsonArray = jsonObject.getJSONArray("data");
 
 					for (int i = 0 ; i<jsonArray.length() ; i++){
-						if(i==0){
-							BatchModel BatchModel = new BatchModel();
-							BatchModel.setBatch_id("");
-							BatchModel.setBatch_name("Please Select Batch");
-							BatchModel.setBatch_time("Please Select Batch");
-							BatchModel.setStatus("");
-							BatchModel.setBranch_id("");
-							mDataset1.add(BatchModel);
-						}
 						JSONObject object = jsonArray.getJSONObject(i);
 						BatchModel BatchModel = new BatchModel();
 						BatchModel.setBatch_id(object.getString("batch_id"));
@@ -354,7 +349,7 @@ public class AddExam extends Fragment {
 			int month = c.get(Calendar.MONTH);
 			int day = c.get(Calendar.DAY_OF_MONTH);
 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
-			//dialog.getDatePicker().setMaxDate(c.getTimeInMillis());/
+			dialog.getDatePicker().setMinDate(c.getTimeInMillis());
 			return  dialog;
 		}
 
@@ -377,8 +372,45 @@ public class AddExam extends Fragment {
 		}
 	}
 
+	private void AddExamAndroidNetworking(String mock_test_name, String mock_test_date,String mock_test_time,String speaking_topic,String essay,String branch_id,String coaching_id,String batch_id) {
+
+
+		AndroidNetworking.post("http://teqcoder.com/shreeharicrm/api/api/add-exam")
+				.addPathParameter("mock_test_name", mock_test_name)
+				.addQueryParameter("mock_test_date",mock_test_date)
+				.addQueryParameter("mock_test_time", mock_test_time)
+				.addQueryParameter("essay",essay)
+				.addQueryParameter("branch_id", branch_id)
+				.addQueryParameter("coaching_id", coaching_id)
+				.addQueryParameter("batch_id", batch_id)
+				.addHeaders("Authorization","Bearer "+  session.getAPIToken())
+				.setTag("test")
+				.setPriority(Priority.LOW)
+				.build()
+				.getAsString(new StringRequestListener() {
+					@Override
+					public void onResponse(String response) {
+						Log.e("ResponseExam", response + " null");
+						replaceFragment(R.id.nav_host_fragment,new Exam(),"Fragment",null);
+					}
+
+					@Override
+					public void onError(ANError anError) {
+						Log.e("ResponseExam", anError.getErrorDetail() + " null");
+					}
+				});
+	}
+
 	private void AddExam(String mock_test_name, String mock_test_date,String mock_test_time,String speaking_topic,String essay,String branch_id,String coaching_id,String batch_id) {
 
+		Log.e("ExamValue","mock_test_name : "+mock_test_name+"---"+
+				"mock_test_date : "+mock_test_date+"---"+
+				"mock_test_time : "+mock_test_time+"---"+
+				"speaking_topic : "+speaking_topic+"---"+
+				"essay : "+essay+"---"+
+				"branch_id : "+branch_id+"---"+
+				"coaching_id : "+coaching_id+"---"+
+				"batch_id : "+batch_id+"---"+"Authorization" + "Bearer "+ session.getAPIToken() );
 
 		final KProgressHUD progressDialog = KProgressHUD.create(getActivity())
 				.setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -391,7 +423,7 @@ public class AddExam extends Fragment {
 		AddExamRequest loginRequest = new AddExamRequest(mock_test_name,mock_test_date,mock_test_time,speaking_topic,essay,branch_id,coaching_id,batch_id,new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				Log.e("Response", response + " null");
+				Log.e("ResponseExam", response + " null");
 				progressDialog.dismiss();
 				replaceFragment(R.id.nav_host_fragment,new Exam(),"Fragment",null);
 
@@ -413,7 +445,7 @@ public class AddExam extends Fragment {
 		}){@Override
 		public Map<String, String> getHeaders() throws AuthFailureError {
 			Map<String, String> params = new HashMap<String, String>();
-			// params.put("Accept", "application/json");
+			params.put("Accept", "application/json");
 			params.put("Authorization","Bearer "+ session.getAPIToken());
 			return params;
 		}};

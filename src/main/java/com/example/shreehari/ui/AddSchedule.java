@@ -202,6 +202,7 @@ public class AddSchedule extends Fragment {
 				,mDataset.get(batch_pos).getBatch_id(),Type,date.getText().toString(),start_time.getText().toString(),end_time.getText().toString(),session.getBranchId(),classroom.getText().toString());
 		*/
 
+				Log.e("Subject","null"+subject_pos+"  "+mDataset3.size());
 				if(date.getText().toString().isEmpty()){
 					Toast.makeText(getActivity(), "Please Enter Date", Toast.LENGTH_SHORT).show();
 				}else if(start_time.getText().toString().isEmpty()){
@@ -210,6 +211,12 @@ public class AddSchedule extends Fragment {
 					Toast.makeText(getActivity(), "Please Enter End Time", Toast.LENGTH_SHORT).show();
 				}else if(classroom.getText().toString().isEmpty()){
 					Toast.makeText(getActivity(), "Please Enter ClassRoom", Toast.LENGTH_SHORT).show();
+				}else if(subject_pos==mDataset3.size()-1){
+					Toast.makeText(getActivity(), "1Please Select Subject & Batch & Standard", Toast.LENGTH_SHORT).show();
+				}else if(batch_pos==mDataset.size()-1){
+					Toast.makeText(getActivity(), "2Please Select Subject & Batch & Standard", Toast.LENGTH_SHORT).show();
+				}else if(standard_pos==mDataset2.size()-1){
+					Toast.makeText(getActivity(), "3Please Select Subject & Batch & Standard", Toast.LENGTH_SHORT).show();
 				}else {
 					new UploadFileToServer().execute();
 				}
@@ -325,7 +332,6 @@ public class AddSchedule extends Fragment {
 					adapter.setDropDownViewResource(R.layout.spinner_item);
 					batch.setAdapter(adapter);
 					batch.setSelection(adapter.getCount());
-
 
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -514,7 +520,7 @@ public class AddSchedule extends Fragment {
 		}){@Override
 		public Map<String, String> getHeaders() throws AuthFailureError {
 			Map<String, String> params = new HashMap<String, String>();
-			// params.put("Accept", "application/json");
+			 params.put("Accept", "application/json");
 			params.put("Authorization","Bearer "+ session.getAPIToken());
 			return params;
 		}};
@@ -676,7 +682,9 @@ public class AddSchedule extends Fragment {
 			int month = c.get(Calendar.MONTH);
 			int day = c.get(Calendar.DAY_OF_MONTH);
 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
-			//dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+			dialog.getDatePicker().setMinDate(c.getTimeInMillis());
+			c.add(Calendar.DAY_OF_MONTH,2);
+			dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
 			return  dialog;
 		}
 
@@ -685,11 +693,11 @@ public class AddSchedule extends Fragment {
 			calendar.set(year, month, day);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String dateString = dateFormat.format(calendar.getTime());
-			try {
-				if (dateFormat.parse(formattedDate_abc).after(dateFormat.parse(dateString))) {
+		/*	try {
+				*//*if (dateFormat.parse(formattedDate_abc).after(dateFormat.parse(dateString))) {
 						Toast.makeText(getActivity(), "Please select correct date", Toast.LENGTH_SHORT).show();
 						return;
-					}
+					}*//*
 
 				    Date oldDate = null;
 					oldDate = dateFormat.parse(dateString);
@@ -708,7 +716,7 @@ public class AddSchedule extends Fragment {
 
 			} catch (ParseException e) {
 				e.printStackTrace();
-			}
+			}*/
 			date.setText(dateString);
 			formattedDate = dateString;
 

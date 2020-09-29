@@ -1,11 +1,14 @@
 package com.example.shreehari.ui;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -62,6 +65,8 @@ public class StudentSearch extends Fragment {
 	private RecyclerView recyleview;
 	private StudentAdapter mAdapter;
 	private ArrayList<StudentModel> mDataset = new ArrayList<>();
+	private ArrayList<StudentModel> filterdNames;
+	private boolean isFilter = false;
 
 	// Store instance variables based on arguments passed
 	@Override
@@ -89,12 +94,19 @@ public class StudentSearch extends Fragment {
 			@Override
 			public void onItemClick(int item) {
 
-				Profile fragobj = new Profile();
-				Bundle bundle = new Bundle();
-				bundle.putString("User_Id", mDataset.get(item).getMobile_user_master_id());
-				fragobj.setArguments(bundle);
-				replaceFragment(R.id.nav_host_fragment,fragobj,"Fragment",null);
-
+				if(isFilter){
+					Profile fragobj = new Profile();
+					Bundle bundle = new Bundle();
+					bundle.putString("User_Id", filterdNames.get(item).getMobile_user_master_id());
+					fragobj.setArguments(bundle);
+					replaceFragment(R.id.nav_host_fragment, fragobj, "Fragment", null);
+				}else {
+					Profile fragobj = new Profile();
+					Bundle bundle = new Bundle();
+					bundle.putString("User_Id", mDataset.get(item).getMobile_user_master_id());
+					fragobj.setArguments(bundle);
+					replaceFragment(R.id.nav_host_fragment, fragobj, "Fragment", null);
+				}
 			}
 		});
 		recyleview.setAdapter(mAdapter);
@@ -160,11 +172,47 @@ public class StudentSearch extends Fragment {
 			}
 		});
 
+		EditText search = view.findViewById(R.id.search);
+		search.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+				filter(charSequence.toString());
+			}
+
+			@Override
+			public void afterTextChanged(Editable editable) {
+
+			}
+		});
+
 
 		return view;
 	}
 
 
+	private void filter(String text) {
+		//new array list that will hold the filtered data
+		filterdNames = new ArrayList<>();
+		isFilter = true;
+		//looping through existing elements
+		for (StudentModel wp : mDataset) {
+			//if the existing elements contains the search input
+			if (wp.getFirst_name().toLowerCase().contains(text.toLowerCase())) {
+				//adding the element to filtered list
+				filterdNames.add(wp);
+			}
+		}
+
+		//calling a method of the adapter class and passing the filtered list
+		mAdapter.filterList(filterdNames);
+		mAdapter.notifyDataSetChanged();
+	}
 
 	private void GetResult(String standard_id,String batch_id) {
 
@@ -251,16 +299,6 @@ public class StudentSearch extends Fragment {
 					JSONArray jsonArray = jsonObject.getJSONArray("data");
 
 					for (int i = 0 ; i<jsonArray.length() ; i++){
-						if(i==0){
-							BatchModel BatchModel = new BatchModel();
-							BatchModel.setBatch_id("");
-							BatchModel.setBatch_name("Please Select Batch");
-
-							BatchModel.setBatch_time("Please Select Batch");
-							BatchModel.setStatus("");
-							BatchModel.setBranch_id("");
-							mDataset1.add(BatchModel);
-						}
 						JSONObject object = jsonArray.getJSONObject(i);
 						BatchModel BatchModel = new BatchModel();
 						BatchModel.setBatch_id(object.getString("batch_id"));

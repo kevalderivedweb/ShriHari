@@ -7,6 +7,7 @@ public class StudentModel {
     String standard;
     String coaching_reg_no;
     String first_name;
+    private String selected;
 
     public String getMobile_user_master_id() {
         return mobile_user_master_id;
@@ -68,5 +69,11 @@ public class StudentModel {
     String profile_pic;
 
 
+    public void setSelected(String selected) {
+        this.selected = selected;
+    }
 
+    public String getSelected() {
+        return selected;
+    }
 }

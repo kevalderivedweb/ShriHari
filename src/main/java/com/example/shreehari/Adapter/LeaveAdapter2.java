@@ -115,7 +115,10 @@ public class LeaveAdapter2 extends RecyclerView.Adapter<LeaveAdapter2.MyViewHold
 
         if(session.getUserType().equals("admin")){
             holder.batch.setVisibility(View.VISIBLE);
-            holder.submit.setVisibility(View.VISIBLE);
+            holder.submit.setVisibility(View.GONE);
+        }else if(session.getUserType().equals("parent")){
+            holder.batch.setVisibility(View.GONE);
+            holder.submit.setVisibility(View.GONE);
         }else {
             holder.batch.setVisibility(View.GONE);
             holder.submit.setVisibility(View.GONE);
@@ -126,6 +129,7 @@ public class LeaveAdapter2 extends RecyclerView.Adapter<LeaveAdapter2.MyViewHold
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 BatchPositions = i;
+                listener.onItemClick(position,mDataset_Leave.get(BatchPositions).getBatch_id());
             }
 
             @Override
@@ -136,12 +140,6 @@ public class LeaveAdapter2 extends RecyclerView.Adapter<LeaveAdapter2.MyViewHold
         holder.date.setText(mDataset.get(position).getBreak_from() +" To "+ mDataset.get(position).getBreak_to());
         holder.name.setText(mDataset.get(position).getFirst_name() + " " + mDataset.get(position).getLast_name());
         holder.remark.setText(mDataset.get(position).getRemarks());
-        holder.submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onItemClick(position,mDataset_Leave.get(BatchPositions).getBatch_id());
-            }
-        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -183,7 +181,7 @@ public class LeaveAdapter2 extends RecyclerView.Adapter<LeaveAdapter2.MyViewHold
 
 
                     BatchModel BatchModel = new BatchModel();
-                    BatchModel.setBatch_id("123");
+                    BatchModel.setBatch_id("1a23");
                     BatchModel.setBatch_time("Please Select Status");
                     BatchModel.setBatch_name("Please Select Status");
                     BatchModel.setStatus("");

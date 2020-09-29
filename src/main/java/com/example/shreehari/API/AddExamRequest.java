@@ -24,7 +24,7 @@ public class AddExamRequest extends StringRequest {
         parameters.put("speaking_topic", speaking_topic);
         parameters.put("essay", essay);
         parameters.put("branch_id", branch_id);
-        parameters.put("coaching_id", coaching_id);
+        parameters.put("standard_id", coaching_id);
         parameters.put("batch_id", batch_id);
 
     }
