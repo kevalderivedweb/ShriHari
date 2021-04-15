@@ -18,6 +18,9 @@ public class GetGallaryDetailsRequest extends StringRequest {
     public GetGallaryDetailsRequest(String Page,String id,Response.Listener<String> listener, Response.ErrorListener errorListener) {
         super(Method.GET, ServerUtils.BASE_URL+"get-gallery-by-category?mobile_gallery_category_id="+id+"&page="+Page, listener, errorListener);
         parameters = new HashMap<>();
+/*
+        parameters = new HashMap<>();
+*/
 
     }
 
