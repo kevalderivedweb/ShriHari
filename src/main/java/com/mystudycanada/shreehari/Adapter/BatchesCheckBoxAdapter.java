@@ -63,6 +63,9 @@ public class BatchesCheckBoxAdapter extends RecyclerView.Adapter<BatchesCheckBox
     // Replace the contents of a view (invoked by the layout manager)
     @SuppressLint("SetTextI18n")
     @Override
+/*
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
+*/
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.bachesname.setText(mDataset.get(position).getBatch_name());
