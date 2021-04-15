@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@drawable/backgraound_gray_round_full">
+
+
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:textColor="@color/txt_color"
+            android:textStyle="normal"
+            android:src="@drawable/profile"
+            android:layout_weight="0"
+            android:layout_marginLeft="10dp"
+            android:text="A"
+            android:textSize="25dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/txt_color"
+                android:textSize="8dp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+
+                android:layout_marginLeft="10dp"
+                android:text="Topic : Listening"/>
+
+            <TextView
+                android:id="@+id/start_end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/txt_color"
+                android:textSize="8dp"
+                android:textStyle="normal"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:text="Time : 9:00 - 10:00 am"/>
+
+            <TextView
+                android:id="@+id/classroom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/txt_color"
+                android:textSize="8dp"
+                android:layout_gravity="center"
+                android:textStyle="normal"
+                android:layout_marginLeft="10dp"
+                android:text="Classroom : Class 03"/>
+
+            <TextView
+                android:id="@+id/batch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/txt_color"
+                android:textSize="8dp"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="normal"
+                android:layout_marginLeft="10dp"
+                android:text="Faculty : Miss XYZ"/>
+
+            <TextView
+                android:id="@+id/standard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/txt_color"
+                android:textSize="8dp"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="normal"
+                android:layout_marginLeft="10dp"
+                android:text="Faculty : Miss XYZ"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

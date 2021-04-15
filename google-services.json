@@ -1,43 +1,94 @@
 {
   "project_info": {
-    "project_number": "1007400086782",
-    "firebase_url": "https://shreehari-77230.firebaseio.com",
-    "project_id": "shreehari-77230",
-    "storage_bucket": "shreehari-77230.appspot.com"
+    "project_number": "442043945454",
+    "firebase_url": "https://mystudycanada-4e11d.firebaseio.com",
+    "project_id": "mystudycanada-4e11d",
+    "storage_bucket": "mystudycanada-4e11d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1007400086782:android:ead11498d83d4f601389af",
+        "mobilesdk_app_id": "1:442043945454:android:6fdee4b66ba03496ab3eff",
         "android_client_info": {
-          "package_name": "com.example.shreehari"
+          "package_name": "com.application.mystudycanada"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1007400086782-rjt9no0m0bdp9hsbnj63vi239du27sj7.apps.googleusercontent.com",
+          "client_id": "442043945454-ufn58olekji1vo8kuulclaott56bfi1v.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.shreehari",
-            "certificate_hash": "bdbe2531d99769457071e36aef77f67d36f49812"
+            "package_name": "com.application.mystudycanada",
+            "certificate_hash": "22dc9ebc407f7545657ea9e25d14ccc4cc31ce54"
           }
         },
         {
-          "client_id": "1007400086782-4s0o653ua522d04ndnte4h9lcn7oot24.apps.googleusercontent.com",
+          "client_id": "442043945454-v4cbu9j10qbehm6p65t1t1lrlqbtsqeu.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCsMYiYIxCDmrIosprpacN1Lk_CGYfSWIk"
+          "current_key": "AIzaSyAtKwMExQs0RT5EONvoVsi3uKrzWwoIlS4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1007400086782-4s0o653ua522d04ndnte4h9lcn7oot24.apps.googleusercontent.com",
+              "client_id": "442043945454-v4cbu9j10qbehm6p65t1t1lrlqbtsqeu.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "442043945454-fckulou3m49vfv7ecu41at0c9msta385.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.studycanada.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442043945454:android:ee78379432fa3161ab3eff",
+        "android_client_info": {
+          "package_name": "com.mystudycanada.shreehari"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442043945454-li4559kciqf0l1m3arhlrupmt9eh52vn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mystudycanada.shreehari",
+            "certificate_hash": "8b4e6cfe94953cab1740c4bb520c6e558ca42caa"
+          }
+        },
+        {
+          "client_id": "442043945454-v4cbu9j10qbehm6p65t1t1lrlqbtsqeu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtKwMExQs0RT5EONvoVsi3uKrzWwoIlS4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442043945454-v4cbu9j10qbehm6p65t1t1lrlqbtsqeu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "442043945454-fckulou3m49vfv7ecu41at0c9msta385.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.studycanada.app"
+              }
             }
           ]
         }

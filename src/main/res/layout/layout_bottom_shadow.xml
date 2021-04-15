@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_shadow_bottom_common"
+    android:layout_width="fill_parent"
+    android:layout_height="10.0dip"
+    android:layout_marginBottom="-1.0dip"
+    android:background="@drawable/shadow_bg_bar_bottom" />

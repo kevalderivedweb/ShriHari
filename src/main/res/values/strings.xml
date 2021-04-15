@@ -11,4 +11,16 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="gallary">Gallary</string>
+    <string name="select_option">Select Option</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="fcm_token">FCM Token: %s</string>
+    <string name="message_confirm_delete_photo">Are you sure delete this image?</string>
+    <string name="text_button_yes">Yes</string>
+    <string name="text_button_no">No</string>
+    <string name="text_set_wallpaper">text_set_wallpaper</string>
+    <string name="title_share_file">title_share_file</string>
+
 </resources>

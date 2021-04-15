@@ -27,8 +27,9 @@
     <ImageView
         android:id="@+id/download"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginLeft="15dp"
+        android:padding="8dp"
         android:layout_marginRight="10dp"
         android:layout_gravity="center"
         android:layout_weight="1.5"

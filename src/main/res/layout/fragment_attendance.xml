@@ -31,6 +31,7 @@
             android:layout_weight="0.4"
             android:layout_marginLeft="10dp"
             android:text="Add Attendance"
+
             android:textSize="18dp"/>
 
         <ImageView
@@ -65,8 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
+            android:orientation="vertical"
+            android:weightSum="3"
             android:layout_marginTop="15dp">
 
             <LinearLayout
@@ -74,12 +75,36 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical"
-                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/colorPrimary"
                 android:layout_weight="1">
 
                 <Spinner
                     android:id="@+id/standard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_color"
+                    android:textStyle="normal"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="Standard"
+                    android:textSize="20dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1">
+
+                <Spinner
+                    android:id="@+id/coaching_level"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/txt_color"
@@ -99,6 +124,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical"
+                android:layout_marginTop="10dp"
+
                 android:background="@color/colorPrimary"
                 android:layout_weight="1">
 
@@ -185,6 +212,7 @@
                 android:text="Present : 0"
                 android:textSize="15dp"/>
 
+
             <TextView
                 android:id="@+id/red"
                 android:layout_width="match_parent"
@@ -216,6 +244,167 @@
         </LinearLayout>
 
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:weightSum="4">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1.6">
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/gray"
+                        android:background="@drawable/bg_round_exam"
+                        android:textSize="16dp"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:layout_marginLeft="5dp"
+                    android:text="Regular"
+                    android:textSize="16dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1.6">
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/green"
+                        android:background="@drawable/bg_round_exam"
+                        android:textSize="16dp"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/green"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:layout_marginLeft="5dp"
+                    android:text="Present"
+                    android:textSize="16dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1.6">
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/red"
+                        android:background="@drawable/bg_round_exam"
+                        android:textSize="16dp"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:layout_marginLeft="5dp"
+                    android:text="Absent"
+                    android:textSize="16dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1.6">
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/yellow"
+                        android:background="@drawable/bg_round_exam"
+                        android:textSize="16dp"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/yellow"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:layout_marginLeft="5dp"
+                    android:text="Leave"
+                    android:textSize="16dp"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/recyleview"

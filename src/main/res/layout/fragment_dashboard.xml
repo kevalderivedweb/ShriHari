@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
@@ -16,211 +17,9 @@
         android:orientation="vertical"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="vertical">
-
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/txt_gray"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/bg_round_gray">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:src="@drawable/ic_date"
-                android:tint="@color/white"
-                android:backgroundTint="@color/txt_color"
-                android:textSize="25dp"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/txt_color"
-                android:textSize="15dp"
-                android:layout_gravity="center"
-                android:gravity="start"
-                android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:text="Coaching Schedule"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:background="@color/txt_color">
-
-
-            <include layout="@layout/item_dashboard"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent" />
-
-
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/txt_gray"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/bg_round_gray">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:src="@drawable/ic_date"
-                    android:tint="@color/white"
-                    android:backgroundTint="@color/txt_color"
-                    android:textSize="25dp"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/txt_color"
-                android:textSize="15dp"
-                android:layout_gravity="center"
-                android:gravity="start"
-                android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:text="Coaching Schedule"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:background="@color/txt_color">
-
-
-            <include layout="@layout/item_dashboard"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent" />
-
-
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:visibility="visible"
-        android:orientation="vertical">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/txt_gray"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/bg_round_gray">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:src="@drawable/ic_date"
-                    android:tint="@color/white"
-                    android:backgroundTint="@color/txt_color"
-                    android:textSize="25dp"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/txt_color"
-                android:textSize="15dp"
-                android:layout_gravity="center"
-                android:gravity="start"
-                android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:text="Coaching Schedule"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:background="@color/txt_color">
-
-
-            <include layout="@layout/item_dashboard"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent" />
-
-
-
-        </LinearLayout>
-    </LinearLayout>
-        <LinearLayout
+            android:id="@+id/batchlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -250,10 +49,10 @@
                         android:layout_height="20dp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:src="@drawable/ic_date"
-                        android:tint="@color/white"
+                        android:src="@drawable/batch_level_con"
                         android:backgroundTint="@color/txt_color"
-                        android:textSize="25dp"/>
+                        android:textSize="25dp"
+                        app:tint="@color/white" />
 
                 </LinearLayout>
 
@@ -266,7 +65,194 @@
                     android:gravity="start"
                     android:textStyle="bold"
                     android:layout_marginLeft="10dp"
-                    android:text="Coaching Schedule"/>
+                    android:text="Level &amp; Batch"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:padding="5dp"
+                android:orientation="horizontal"
+                android:background="@color/txt_color">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/shadow2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/txt_color"
+                        android:textStyle="bold"
+                        android:gravity="start"
+                        android:id="@+id/batchtxt"
+                        android:layout_weight="1.8"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="15dp"
+                        android:text="Batch : IELTS"
+                        android:textSize="12dp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/shadow2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/txt_color"
+                        android:textStyle="bold"
+                        android:gravity="start"
+                        android:id="@+id/leveltxt"
+                        android:layout_weight="1.8"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="15dp"
+                        android:text="Level : PRE IETLS"
+                        android:textSize="12dp"/>
+
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/schedule"
+            android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+            android:visibility="gone"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/txt_gray"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_round_gray">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:src="@drawable/ic_date"
+                android:backgroundTint="@color/txt_color"
+                android:textSize="25dp"
+                app:tint="@color/white" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/txt_color"
+                android:textSize="15dp"
+                android:layout_gravity="center"
+                android:gravity="start"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:text="Coaching Schedule"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:background="@color/txt_color">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/recyleview_schedule"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/exam"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/txt_gray"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/bg_round_gray">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:src="@drawable/ic_date"
+                        android:backgroundTint="@color/txt_color"
+                        android:textSize="25dp"
+                        app:tint="@color/white" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_color"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:gravity="start"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
+                    android:text="Upcoming Exam"/>
 
 
             </LinearLayout>
@@ -278,16 +264,297 @@
                 android:orientation="horizontal"
                 android:background="@color/txt_color">
 
-
-                <include layout="@layout/item_dashboard"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent" />
-
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/recyleview_exam"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"/>
 
 
             </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/leave"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/txt_gray"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/bg_round_gray">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:src="@drawable/ic_date"
+                        android:backgroundTint="@color/txt_color"
+                        android:textSize="25dp"
+                        app:tint="@color/white" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_color"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:gravity="start"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
+                    android:text="Pending Leaves"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/txt_color">
+
+                <RelativeLayout
+                    android:id="@+id/main_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <RelativeLayout
+                        android:id="@+id/one1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/viewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp" />
+
+                    </RelativeLayout>
+
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/one1"
+                        android:layout_marginTop="-15dp"
+                        app:tabIndicatorGravity="center"
+                        app:tabBackground="@drawable/indicator_selector"
+                        app:tabGravity="center"
+                        android:layout_marginLeft="10dp"
+                        app:tabIndicatorFullWidth="false"
+                        app:tabIndicatorHeight="0dp"
+                        app:tabPaddingEnd="7dp"
+                        app:tabPaddingStart="7dp" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/attandace"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/txt_gray"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/bg_round_gray">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:src="@drawable/ic_date"
+                        android:backgroundTint="@color/txt_color"
+                        android:textSize="25dp"
+                        app:tint="@color/white" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_color"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:gravity="start"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
+                    android:text="Attendance"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/txt_color">
+
+                <LinearLayout
+                    android:id="@+id/attandacne"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/corner_background_green"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_weight="0.5"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="PRESENT"
+                            android:textSize="11dp"/>
+
+                        <TextView
+                            android:id="@+id/txt_present"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_weight="0.5"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="15dp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/corner_background_red"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_weight="0.5"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="ABSENT"
+                            android:textSize="11dp"/>
+
+                        <TextView
+                            android:id="@+id/txt_absent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_weight="0.5"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="15dp"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/corner_background_yellow"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_weight="0.5"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="Leave"
+                            android:textSize="11dp"/>
+
+                        <TextView
+                            android:id="@+id/txt_leave"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_weight="0.5"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="15dp"/>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
 
 
     </LinearLayout>
@@ -295,6 +562,7 @@
     </ScrollView>
 
     <ImageView
+        android:id="@+id/circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/circle"
@@ -304,6 +572,7 @@
         android:layout_marginRight="15dp"/>
 
     <ImageView
+        android:id="@+id/add_btn"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:src="@drawable/open_botton_2"
@@ -313,44 +582,54 @@
         android:layout_marginBottom="40dp"/>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/msg"
+        android:id="@+id/one"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/one"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="95dp"
+        android:layout_centerInParent="true"
+        android:scaleType="centerInside"
         android:background="@drawable/bg_round_white"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp"
+        app:tint="@color/colorPrimary" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/msg"
+        android:id="@+id/two"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/two"
         android:background="@drawable/bg_round_white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="70dp"
-        android:layout_marginRight="50dp"/>
+        android:layout_marginRight="40dp"
+        app:tint="@color/colorPrimary" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/msg"
+        android:id="@+id/three"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/three"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="30dp"
         android:background="@drawable/bg_round_white"
-        android:layout_marginRight="50dp"/>
+        android:layout_marginRight="45dp"
+        app:tint="@color/colorPrimary" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/msg"
+        android:id="@+id/four"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/four"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="5dp"
         android:background="@drawable/bg_round_white"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp"
+        app:tint="@color/colorPrimary" />
 
 
 </RelativeLayout>

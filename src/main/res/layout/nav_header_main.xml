@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/gray"
     android:orientation="vertical">
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ida"
+        android:visibility="visible"
         android:orientation="vertical">
     
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:layout_marginTop="30dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         
 
 
@@ -30,20 +33,13 @@
             android:layout_height="120dp"
             android:src="@drawable/profile"
             app:civ_border_width="2dp"
-            android:layout_marginLeft="10dp"
             app:civ_border_color="@color/colorPrimary"/>
 
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:layout_margin="13dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="5dp">
+            android:orientation="vertical">
 
 
             <TextView
@@ -53,7 +49,9 @@
                 android:text=" Milan Patel"
                 android:textColor="@color/white"
                 android:textSize="13dp"
+                android:gravity="center"
                 android:textStyle="bold"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp" />
 
             <TextView
@@ -63,6 +61,7 @@
                 android:text=" Milan Patel"
                 android:textColor="@color/white"
                 android:textSize="13dp"
+                android:visibility="gone"
                 android:textStyle="normal"
                 android:layout_marginTop="10dp" />
 
@@ -73,6 +72,7 @@
                 android:text=" Milan Patel"
                 android:textColor="@color/white"
                 android:textSize="13dp"
+                android:visibility="gone"
                 android:textStyle="normal"
                 android:layout_marginTop="40dp" />
 
@@ -83,7 +83,9 @@
         
     </LinearLayout>
 
-
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -108,6 +110,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Dashboard"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:src="@drawable/arrow_white"
+                android:layout_weight="1.25"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="visible"
+            android:background="@color/white"/>
+
+        <LinearLayout
+            android:id="@+id/ln_ilts"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            android:gravity="center"
+            android:weightSum="3">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_dashboard"
+                android:layout_weight="1.25"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="IELTS Exam Dates"
                 android:textColor="@color/white"
                 android:textSize="16dp"
                 android:layout_marginLeft="10dp"
@@ -327,6 +370,7 @@ android:weightSum="3">
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="horizontal"
             android:weightSum="3">
 
@@ -358,6 +402,7 @@ android:weightSum="3">
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:visibility="gone"
             android:background="@color/white"/>
     <LinearLayout
         android:id="@+id/ln_exam"
@@ -545,6 +590,47 @@ android:weightSum="3">
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:visibility="visible"
+            android:background="@color/white"/>
+
+        <LinearLayout
+            android:id="@+id/ln_downloads"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_gallary"
+                android:layout_weight="1.25"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Download Images"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:src="@drawable/arrow_white"
+                android:layout_weight="1.25"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="gone"
             android:background="@color/white"/>
     <LinearLayout
         android:id="@+id/ln_connect"
@@ -552,6 +638,7 @@ android:weightSum="3">
             android:layout_height="50dp"
           android:layout_gravity="center"
           android:gravity="center"
+        android:visibility="gone"
             android:orientation="horizontal"
 android:weightSum="3">
 
@@ -766,6 +853,7 @@ android:weightSum="3">
                 android:text="Setting"
                 android:textColor="@color/white"
                 android:textSize="16dp"
+                android:id="@+id/txt_setting"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
@@ -795,7 +883,7 @@ android:weightSum="3">
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="horizontal"
-            android:visibility="visible"
+            android:visibility="gone"
             android:weightSum="3">
 
             <ImageView
@@ -808,6 +896,7 @@ android:weightSum="3">
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Logout"
+                android:visibility="visible"
                 android:textColor="@color/white"
                 android:textSize="16dp"
                 android:gravity="center_vertical"
@@ -836,7 +925,29 @@ android:weightSum="3">
     </LinearLayout>
 
 
-    </LinearLayout>
+
     </ScrollView>
 
-</LinearLayout>
+    </LinearLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/ida"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/white_curve"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/shreehari_logo"
+            android:scaleType="fitXY" />
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

@@ -182,7 +182,7 @@
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:layout_margin="10dp"
-                android:background="@drawable/corner_background_gray"
+                android:background="@drawable/corner_background_yellow"
                 android:layout_weight="1">
 
                 <TextView
