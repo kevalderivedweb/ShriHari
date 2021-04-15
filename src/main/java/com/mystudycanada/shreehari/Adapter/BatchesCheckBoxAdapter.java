@@ -17,6 +17,9 @@ import java.util.ArrayList;
 public class BatchesCheckBoxAdapter extends RecyclerView.Adapter<BatchesCheckBoxAdapter.MyViewHolder> {
 
     private final OnItemClickListener listener;
+/*
+    private ArrayList<BatchModel> mDataset;
+*/
     private ArrayList<BatchModel> mDataset;
 
     // Provide a reference to the views for each data item
